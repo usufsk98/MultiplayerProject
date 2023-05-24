@@ -17,6 +17,7 @@ public class OnlineMultiplayerManager : MonoBehaviour
     [SerializeField] GameObject parentToSpawnObject;
 
     public TMPro.TextMeshProUGUI textComponent;
+    public UnityEngine.UI.Button turnEndButton;
 
     public int currentTurnIndex = 1;
 
@@ -28,6 +29,7 @@ public class OnlineMultiplayerManager : MonoBehaviour
     public bool gameStarted = false;
     public bool inGame = false;
     public bool imDealer = false;
+
 
     private void Awake()
     {
@@ -93,7 +95,8 @@ public class OnlineMultiplayerManager : MonoBehaviour
             {
                 _localPlayerDataManager.GetComponent<PhotonView>().RPC("DealerTagEnabler", RpcTarget.All);
             }
-
+            turnEndButton.gameObject.SetActive(true);
+            textComponent.text = "Player 1 turn";
         }
 
         //UI_Manager.Instance.OpenPanel(typeof(UI_GamePlay), true);
@@ -133,5 +136,10 @@ public class OnlineMultiplayerManager : MonoBehaviour
     public void EndTurn()
     {
         _localPlayerDataManager.photonView.RPC("EndTurnRPC", RpcTarget.All);
+        _localPlayerDataManager.photonView.RPC("TurnBoolTester", RpcTarget.All);
     }
+
+    
+
+
 }

@@ -10813,6 +10813,7 @@ MonoBehaviour:
   playerDataManager: {fileID: 7564417620796775769, guid: 4dafaefe7e62b584594f505906c97c23, type: 3}
   parentToSpawnObject: {fileID: 1927714490}
   textComponent: {fileID: 1522772142}
+  turnEndButton: {fileID: 1768971748}
   currentTurnIndex: 1
   playerToInstantiate: {fileID: 7103463779970622798, guid: d4de798c4874b0943844b04d7865664d, type: 3}
   _localPlayerDataManager: {fileID: 0}
@@ -12001,7 +12002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1768971747
 RectTransform:
   m_ObjectHideFlags: 0

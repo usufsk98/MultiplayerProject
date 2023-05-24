@@ -79,6 +79,33 @@ public class PlayerDataManager : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    public void TurnBoolTester()
+    {
+        Debug.Log(OnlineMultiplayerManager.instance.currentTurnIndex);
+        //foreach (var player in PhotonNetwork.PlayerList)
+        //{
+        //    if (player.ActorNumber == OnlineMultiplayerManager.instance.currentTurnIndex)
+        //    {
+        //        OnlineMultiplayerManager.instance.turnEndButton.gameObject.SetActive(true);
+        //        Debug.Log("Player " + player.ActorNumber + " turn");
+        //    }
+        //    else
+        //    {
+        //        OnlineMultiplayerManager.instance.turnEndButton.gameObject.SetActive(false);
+        //    }
+        //}
+
+        if (PhotonNetwork.LocalPlayer.ActorNumber == OnlineMultiplayerManager.instance.currentTurnIndex)
+        {
+            OnlineMultiplayerManager.instance.turnEndButton.gameObject.SetActive(true);
+            Debug.Log("Player " + PhotonNetwork.LocalPlayer.ActorNumber + " turn");
+        }
+        else
+        {
+            OnlineMultiplayerManager.instance.turnEndButton.gameObject.SetActive(false);
+        }
+    }
 
     void InitPlayer()
     {
