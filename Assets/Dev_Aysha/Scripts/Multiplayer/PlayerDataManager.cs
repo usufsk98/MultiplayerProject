@@ -51,6 +51,20 @@ public class PlayerDataManager : MonoBehaviour
         GetComponent<PlayerBoy>().dealerBool = true;
     }
 
+    [PunRPC]
+    public void BigAndSmallBlindSetter()
+    {
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 2 && GetComponent<PhotonView>().IsMine)
+        {
+            GetComponent<PlayerBoy>().bigBlindBool = true;
+            Debug.Log("You are the big blind");
+        }
+        else if(PhotonNetwork.LocalPlayer.ActorNumber == 3 && GetComponent<PhotonView>().IsMine)
+        {
+            GetComponent<PlayerBoy>().smallBlindBool = true;
+            Debug.Log("You are the small blind");
+        }
+    }
 
     [PunRPC]
     public void PlayGameStarter()
@@ -70,12 +84,10 @@ public class PlayerDataManager : MonoBehaviour
         if (OnlineMultiplayerManager.instance.currentTurnIndex == PhotonNetwork.CurrentRoom.MaxPlayers)
         {
             OnlineMultiplayerManager.instance.currentTurnIndex = 1;
-            OnlineMultiplayerManager.instance.textComponent.text = "Player " + OnlineMultiplayerManager.instance.currentTurnIndex +" turn";
         }
         else
         {
             OnlineMultiplayerManager.instance.currentTurnIndex++;
-            OnlineMultiplayerManager.instance.textComponent.text = "Player " + OnlineMultiplayerManager.instance.currentTurnIndex + " turn";
         }
     }
 
@@ -97,13 +109,15 @@ public class PlayerDataManager : MonoBehaviour
         //}
 
         if (PhotonNetwork.LocalPlayer.ActorNumber == OnlineMultiplayerManager.instance.currentTurnIndex)
-        {
-            OnlineMultiplayerManager.instance.turnEndButton.gameObject.SetActive(true);
+        { 
             Debug.Log("Player " + PhotonNetwork.LocalPlayer.ActorNumber + " turn");
+            OnlineMultiplayerManager.instance.radialSliderButton.SetActive(true);
+            OnlineMultiplayerManager.instance.foldButton.SetActive(true);
         }
         else
         {
-            OnlineMultiplayerManager.instance.turnEndButton.gameObject.SetActive(false);
+            OnlineMultiplayerManager.instance.radialSliderButton.SetActive(false);
+            OnlineMultiplayerManager.instance.foldButton.SetActive(false);
         }
     }
 

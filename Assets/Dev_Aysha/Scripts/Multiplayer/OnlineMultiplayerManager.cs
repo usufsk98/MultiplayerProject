@@ -16,8 +16,14 @@ public class OnlineMultiplayerManager : MonoBehaviour
     public PlayerDataManager playerDataManager;
     [SerializeField] GameObject parentToSpawnObject;
 
-    public TMPro.TextMeshProUGUI textComponent;
-    public UnityEngine.UI.Button turnEndButton;
+    public GameObject radialSliderButton;
+    public GameObject foldButton;
+
+    public int playerCurrentTotalBet;
+
+    public int lastBetLocalPlayer;
+
+    public int totalBetOverNetwork;
 
     public int currentTurnIndex = 1;
 
@@ -95,10 +101,10 @@ public class OnlineMultiplayerManager : MonoBehaviour
             {
                 _localPlayerDataManager.GetComponent<PhotonView>().RPC("DealerTagEnabler", RpcTarget.All);
             }
-            turnEndButton.gameObject.SetActive(true);
-            textComponent.text = "Player 1 turn";
         }
-
+        _localPlayerDataManager.GetComponent<PhotonView>().RPC("BigAndSmallBlindSetter", RpcTarget.All);
+        _localPlayerDataManager.photonView.RPC("EndTurnRPC", RpcTarget.All);
+        _localPlayerDataManager.photonView.RPC("TurnBoolTester", RpcTarget.All);
         //UI_Manager.Instance.OpenPanel(typeof(UI_GamePlay), true);
     }
     public void OnPlayerJoinGame()

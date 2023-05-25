@@ -41,6 +41,8 @@ public class PlayerBoy : MonoBehaviour
     public GameObject dealerTag;
 
     public bool dealerBool;
+    public bool bigBlindBool;
+    public bool smallBlindBool;
 
     public bool myTurn;
 
@@ -161,6 +163,7 @@ public class PlayerBoy : MonoBehaviour
     }
 
     // Method to handle a call action
+
     public void Call(int currentBet)
     {
         int callAmount = currentBet;
@@ -178,6 +181,7 @@ public class PlayerBoy : MonoBehaviour
             currentBet += callAmount;
             // Update the UI to reflect the new pot size and player chip counts
             // Prompt the next player to act
+            
         }
     }
 

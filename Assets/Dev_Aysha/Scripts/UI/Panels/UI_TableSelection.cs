@@ -10,7 +10,7 @@ public class UI_TableSelection : UI_Panel
         PhotonManager.instance.maxPlayersInRoom = 2;
 
         //Commented by Dev
-        //PhotonManager.instance.maxPlayersInRoom = 5;
+        //PhotonManager.instance.maxPlayersInRoom = 3;
         PhotonManager.instance.FreeForAll(PhotonManager.instance.maxPlayersInRoom);
         UI_Manager.instance.OpenPanel(typeof(UI_WaitingForOtherPlayers), true);
         //SceneManager.LoadScene(SceneType.GamePlay.ToString());

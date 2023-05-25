@@ -50,6 +50,10 @@ MonoBehaviour:
   - EndTurnFunctionButtonClick
   - EndTurnRPC
   - TurnBoolTester
+  - BigAndSmallBlindSetter
+  - Call
+  - CallFunctionRPC
+  - CallFunctionRPCCallFunctionRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

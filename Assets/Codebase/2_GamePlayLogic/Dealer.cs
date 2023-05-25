@@ -32,7 +32,8 @@ public class Dealer : Singleton_IndependentObject<Dealer>
 
     int currentDealer = 0;
 
-    [HideInInspector] public PlayerBoy currentPlayerBoy;
+    //[HideInInspector]
+    public PlayerBoy currentPlayerBoy;
     public PokerRoundManager pokerRoundManager;
 
     private int currentPlayer = 0;
@@ -135,12 +136,13 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         //players[currentPlayer].InitialTurn(400, 2);
         yield return new WaitForSeconds(2f);
         StartCoroutine(GiveCardsInAManner());
-        CurrentBet = 400;
-        GameInputManager.instance.SetValue(CurrentBet);
+        //CurrentBet = 400;
+        //GameInputManager.instance.SetValue(CurrentBet);
     }
 
     IEnumerator GiveCardsInAManner()
     {
+        currentPlayerBoy = OnlineMultiplayerManager.instance._localPlayerDataManager.GetComponent<PlayerBoy>();
         int cardsDealt = 0;
         while (cardsDealt < cardsToEachPlayer)
         {
@@ -262,7 +264,9 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         SaveColor(currentPlayer);
         ChangeColor(currentPlayer);
 
-        currentPlayerBoy = players[currentPlayer];
+        //currentPlayerBoy = players[currentPlayer];
+        //Dev Comment
+        currentPlayerBoy = OnlineMultiplayerManager.instance._localPlayerDataManager.GetComponent<PlayerBoy>();
         if (currentPlayerBoy.currentPlayerAction == PlayerAction.Fold)
             NextPlayerTurn();
         else Debug.Log("Player Name" + currentPlayerBoy.name);

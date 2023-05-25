@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class GameInputManager : MonoBehaviour
 {
@@ -39,7 +40,6 @@ public class GameInputManager : MonoBehaviour
         done.onClick.AddListener(() => DealDone());
     }
 
-
     public void Show()
     {
         Invoke(nameof(DelayShoW), 0.3f);
@@ -65,7 +65,8 @@ public class GameInputManager : MonoBehaviour
         Dealer.instance.currentPlayerBoy.Fold();
     }
 
-    private void Call()
+
+    public void Call()
     {
         Debug.Log("Player Calls.");
         DelayUI();
