@@ -33,8 +33,8 @@ public class PlayerBoy : MonoBehaviour
     public TextMeshProUGUI betChipsText;
     public Image highlightedImage;
 
-    private int playerChips = 8000;
-    private int betChips = 0;
+    [SerializeField] int playerChips = 8000;
+    [SerializeField] int betChips = 0;
 
     public PlayerAction currentPlayerAction;
     public GameObject winnerPanel;
@@ -152,6 +152,9 @@ public class PlayerBoy : MonoBehaviour
     {
         currentPlayerAction = PlayerAction.Check;
         InitialTurn(Dealer.instance.CurrentBet, 1);
+
+        Debug.Log(Dealer.instance.CurrentBet);
+        Debug.Log("Check Function");
     }
 
     // Method to handle a raise action
@@ -160,6 +163,8 @@ public class PlayerBoy : MonoBehaviour
         currentPlayerAction = PlayerAction.Raise;
         Dealer.instance.CurrentBet = raisedBetFactor + Dealer.instance.currentPlayerBoy.betChips;
         InitialTurn(raisedBetFactor);
+
+        Debug.Log("Check Function");
     }
 
     // Method to handle a call action
@@ -183,6 +188,8 @@ public class PlayerBoy : MonoBehaviour
             // Prompt the next player to act
             
         }
+
+        Debug.Log("Call Function");
     }
 
     public void Showdown()
@@ -197,6 +204,30 @@ public class PlayerBoy : MonoBehaviour
         if (currentPlayerAction == PlayerAction.Fold) return;
         currentPlayerAction = PlayerAction.None;
     }
+
+    public void PlayerTurn()
+    {
+        GameInputManager.instance.DealDone();
+        if (bigBlindBool && Dealer.instance.currentBet >= 200)
+        {
+            playerChips -= GameInputManager.instance.localbetValue;
+            betChips += GameInputManager.instance.localbetValue;
+            UpdateUITexts();
+        }
+        else if (smallBlindBool && Dealer.instance.currentBet >= 400)
+        {
+            playerChips -= GameInputManager.instance.localbetValue;
+            betChips += GameInputManager.instance.localbetValue;
+            UpdateUITexts();
+        }
+        else
+        {
+            playerChips -= GameInputManager.instance.localbetValue;
+            betChips += GameInputManager.instance.localbetValue;
+            UpdateUITexts();
+        }
+    }
+
 }
 
 

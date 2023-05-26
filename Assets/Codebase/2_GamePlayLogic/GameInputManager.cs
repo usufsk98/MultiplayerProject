@@ -26,7 +26,7 @@ public class GameInputManager : MonoBehaviour
     public GameObject UIPanel;
 
     public TextMeshProUGUI betValueText;
-    int localbetValue;
+    public int localbetValue;
 
     private void Awake()
     {
@@ -35,9 +35,9 @@ public class GameInputManager : MonoBehaviour
     private void Start()
     {
         fold.onClick.AddListener(() => Fold());
-        check.onClick.AddListener(() => Check());
-        call.onClick.AddListener(() => Call());
-        done.onClick.AddListener(() => DealDone());
+        //check.onClick.AddListener(() => Check());
+        //call.onClick.AddListener(() => Call());
+        //done.onClick.AddListener(() => DealDone());
     }
 
     public void Show()

@@ -103,8 +103,8 @@ public class OnlineMultiplayerManager : MonoBehaviour
             }
         }
         _localPlayerDataManager.GetComponent<PhotonView>().RPC("BigAndSmallBlindSetter", RpcTarget.All);
-        _localPlayerDataManager.photonView.RPC("EndTurnRPC", RpcTarget.All);
         _localPlayerDataManager.photonView.RPC("TurnBoolTester", RpcTarget.All);
+
         //UI_Manager.Instance.OpenPanel(typeof(UI_GamePlay), true);
     }
     public void OnPlayerJoinGame()
@@ -141,11 +141,13 @@ public class OnlineMultiplayerManager : MonoBehaviour
 
     public void EndTurn()
     {
+        Debug.Log(Dealer.instance.currentBet);
         _localPlayerDataManager.photonView.RPC("EndTurnRPC", RpcTarget.All);
         _localPlayerDataManager.photonView.RPC("TurnBoolTester", RpcTarget.All);
+        _localPlayerDataManager.photonView.RPC("CallFunction", RpcTarget.All);
+
+        lastBetLocalPlayer = Dealer.instance.currentBet;
+        playerCurrentTotalBet += Dealer.instance.currentBet;
     }
-
-    
-
 
 }

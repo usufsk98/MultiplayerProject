@@ -1626,6 +1626,8 @@ MonoBehaviour:
   playerChipsText: {fileID: 1503596087}
   betChipsText: {fileID: 1464294771}
   highlightedImage: {fileID: 796839335}
+  playerChips: 8000
+  betChips: 0
   currentPlayerAction: 0
   winnerPanel: {fileID: 401490417}
   dealerTag: {fileID: 1883261465}
@@ -2811,6 +2813,7 @@ MonoBehaviour:
   pokerRoundManager:
     currentRound: 0
     roundText: {fileID: 565255177}
+  currentBet: 0
 --- !u!1 &417351551
 GameObject:
   m_ObjectHideFlags: 0
@@ -3766,6 +3769,8 @@ MonoBehaviour:
   playerChipsText: {fileID: 1526462394}
   betChipsText: {fileID: 32685054}
   highlightedImage: {fileID: 615541057}
+  playerChips: 8000
+  betChips: 0
   currentPlayerAction: 0
   winnerPanel: {fileID: 1891493295}
   dealerTag: {fileID: 1717729538}
@@ -5001,6 +5006,8 @@ MonoBehaviour:
   playerChipsText: {fileID: 1940409195}
   betChipsText: {fileID: 1003656863}
   highlightedImage: {fileID: 441782608}
+  playerChips: 8000
+  betChips: 0
   currentPlayerAction: 0
   winnerPanel: {fileID: 1149719606}
   dealerTag: {fileID: 185535431}
@@ -10143,6 +10150,8 @@ MonoBehaviour:
   playerChipsText: {fileID: 1306639096}
   betChipsText: {fileID: 881813749}
   highlightedImage: {fileID: 417351553}
+  playerChips: 8000
+  betChips: 0
   currentPlayerAction: 0
   winnerPanel: {fileID: 809789535}
   dealerTag: {fileID: 1285698281}
@@ -12380,6 +12389,8 @@ MonoBehaviour:
   playerChipsText: {fileID: 1049293059}
   betChipsText: {fileID: 710353390}
   highlightedImage: {fileID: 52466550}
+  playerChips: 8000
+  betChips: 0
   currentPlayerAction: 0
   winnerPanel: {fileID: 1437330256}
   dealerTag: {fileID: 1914545108}

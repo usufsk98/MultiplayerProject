@@ -82,7 +82,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
     }
 
 
-    private int currentBet;
+    public int currentBet;
     public int CurrentBet
     {
         get { return currentBet; }
@@ -228,41 +228,42 @@ public class Dealer : Singleton_IndependentObject<Dealer>
     }
     public void NextPlayerTurn()
     {
-        bool value = IsBettingRoundComplete();
-        if (value)
-        {
-            Debug.Log("-----Entered");
-            AddCoinsToPot();
-            // Do something for the completion
-            switch (pokerRoundManager.currentRound)
-            {
-                case RoundType.PreFlop:
-                    PreFlop();
-                    break;
-                case RoundType.Flop:
-                    Flop();
-                    break;
-                case RoundType.Turn:
-                    Turn();
-                    break;
-                case RoundType.River:
-                    GameCompleted();
-                    return;
-            }
-            pokerRoundManager.SetCurrentRound((RoundType)((int)pokerRoundManager.currentRound + 1));
-            foreach (PlayerBoy player in players)
-                player.ResetAction();
-            Dealer.instance.CurrentBet = 0;
-        }
+        //Commented by Dev
+        //bool value = IsBettingRoundComplete();
+        //if (value)
+        //{
+        //    Debug.Log("-----Entered");
+        //    AddCoinsToPot();
+        //    // Do something for the completion
+        //    switch (pokerRoundManager.currentRound)
+        //    {
+        //        case RoundType.PreFlop:
+        //            PreFlop();
+        //            break;
+        //        case RoundType.Flop:
+        //            Flop();
+        //            break;
+        //        case RoundType.Turn:
+        //            Turn();
+        //            break;
+        //        case RoundType.River:
+        //            GameCompleted();
+        //            return;
+        //    }
+        //    pokerRoundManager.SetCurrentRound((RoundType)((int)pokerRoundManager.currentRound + 1));
+        //    foreach (PlayerBoy player in players)
+        //        player.ResetAction();
+        //    Dealer.instance.CurrentBet = 0;
+        //}
 
-        currentPlayer++;
-        currentPlayer = (currentPlayer % players.Count);
-        if (currentPlayer == 0) RevertColor(players.Count - 1);
-        else RevertColor(currentPlayer - 1);
+        //currentPlayer++;
+        //currentPlayer = (currentPlayer % players.Count);
+        //if (currentPlayer == 0) RevertColor(players.Count - 1);
+        //else RevertColor(currentPlayer - 1);
 
         // Increment the current player's turn and wrap around to 1 if we reach the total number of players     
-        SaveColor(currentPlayer);
-        ChangeColor(currentPlayer);
+        //SaveColor(currentPlayer);
+        //ChangeColor(currentPlayer);
 
         //currentPlayerBoy = players[currentPlayer];
         //Dev Comment

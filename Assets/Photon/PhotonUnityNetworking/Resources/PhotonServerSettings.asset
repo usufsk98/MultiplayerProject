@@ -54,6 +54,8 @@ MonoBehaviour:
   - Call
   - CallFunctionRPC
   - CallFunctionRPCCallFunctionRPC
+  - CallFunction
+  - PlayerTurn
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

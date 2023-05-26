@@ -10,8 +10,6 @@ public class PlayerDataManager : MonoBehaviour
     public PhotonView photonView;
     public GameObject playerPrefab;
 
-    public bool myTurn;
-
     private void Awake()
     {
         if (instance == null)
@@ -89,6 +87,18 @@ public class PlayerDataManager : MonoBehaviour
         {
             OnlineMultiplayerManager.instance.currentTurnIndex++;
         }
+    }
+
+    [PunRPC]
+    public void CallFunction()
+    {
+        GetComponent<PlayerBoy>().PlayerTurn();
+        //GameInputManager.instance.Call();
+        //GameInputManager.instance.DealDone();
+        //GameInputManager.instance.Check();
+        Debug.Log(Dealer.instance.currentBet);
+
+        OnlineMultiplayerManager.instance.totalBetOverNetwork += Dealer.instance.currentBet;
     }
 
     [PunRPC]
