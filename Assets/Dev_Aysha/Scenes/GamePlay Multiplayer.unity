@@ -1634,6 +1634,7 @@ MonoBehaviour:
   dealerBool: 0
   bigBlindBool: 0
   smallBlindBool: 0
+  nameText: {fileID: 0}
   myTurn: 0
 --- !u!114 &238125276
 MonoBehaviour:
@@ -2424,6 +2425,7 @@ MonoBehaviour:
   slider: {fileID: 1773745070}
   UIPanel: {fileID: 1654567222}
   betValueText: {fileID: 1461809850}
+  localbetValue: 0
 --- !u!1 &401490417
 GameObject:
   m_ObjectHideFlags: 0
@@ -3777,6 +3779,7 @@ MonoBehaviour:
   dealerBool: 0
   bigBlindBool: 0
   smallBlindBool: 0
+  nameText: {fileID: 0}
   myTurn: 0
 --- !u!114 &569576489
 MonoBehaviour:
@@ -5014,6 +5017,7 @@ MonoBehaviour:
   dealerBool: 0
   bigBlindBool: 0
   smallBlindBool: 0
+  nameText: {fileID: 0}
   myTurn: 0
 --- !u!114 &722985585
 MonoBehaviour:
@@ -10158,6 +10162,7 @@ MonoBehaviour:
   dealerBool: 0
   bigBlindBool: 0
   smallBlindBool: 0
+  nameText: {fileID: 1670700672}
   myTurn: 0
 --- !u!114 &1486252194
 MonoBehaviour:
@@ -12397,6 +12402,7 @@ MonoBehaviour:
   dealerBool: 0
   bigBlindBool: 0
   smallBlindBool: 0
+  nameText: {fileID: 0}
   myTurn: 0
 --- !u!114 &1791719659
 MonoBehaviour:

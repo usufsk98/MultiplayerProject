@@ -23,6 +23,8 @@ public class PlayerDataManager : MonoBehaviour
     {
         Init();
         OnlineMultiplayerManager.instance.AddPlayer(this);
+
+        GetComponent<PlayerBoy>().nameText.text = GetComponent<PhotonView>().Owner.NickName;
     }
 
     void Init()
@@ -93,9 +95,6 @@ public class PlayerDataManager : MonoBehaviour
     public void CallFunction()
     {
         GetComponent<PlayerBoy>().PlayerTurn();
-        //GameInputManager.instance.Call();
-        //GameInputManager.instance.DealDone();
-        //GameInputManager.instance.Check();
         Debug.Log(Dealer.instance.currentBet);
 
         OnlineMultiplayerManager.instance.totalBetOverNetwork += Dealer.instance.currentBet;
@@ -128,7 +127,7 @@ public class PlayerDataManager : MonoBehaviour
         {
             OnlineMultiplayerManager.instance.radialSliderButton.SetActive(false);
             OnlineMultiplayerManager.instance.foldButton.SetActive(false);
-        }
+        }   
     }
 
     void InitPlayer()

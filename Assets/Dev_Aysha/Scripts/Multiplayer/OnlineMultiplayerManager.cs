@@ -107,16 +107,6 @@ public class OnlineMultiplayerManager : MonoBehaviour
 
         //UI_Manager.Instance.OpenPanel(typeof(UI_GamePlay), true);
     }
-    public void OnPlayerJoinGame()
-    {
-        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
-        {
-            instantiatedGameObject = PhotonNetwork.Instantiate(playerDataManager.gameObject.name, playerSpawnPoints[i].transform.position, playerSpawnPoints[i].transform.rotation);
-            
-            Debug.Log("Player " + i +"Joined the Game");
-        }
-        
-    }
 
     public void PlayerInstantiate()
     {
@@ -144,7 +134,6 @@ public class OnlineMultiplayerManager : MonoBehaviour
         Debug.Log(Dealer.instance.currentBet);
         _localPlayerDataManager.photonView.RPC("EndTurnRPC", RpcTarget.All);
         _localPlayerDataManager.photonView.RPC("TurnBoolTester", RpcTarget.All);
-        _localPlayerDataManager.photonView.RPC("CallFunction", RpcTarget.All);
 
         lastBetLocalPlayer = Dealer.instance.currentBet;
         playerCurrentTotalBet += Dealer.instance.currentBet;

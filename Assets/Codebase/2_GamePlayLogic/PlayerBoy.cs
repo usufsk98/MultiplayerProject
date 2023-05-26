@@ -44,6 +44,8 @@ public class PlayerBoy : MonoBehaviour
     public bool bigBlindBool;
     public bool smallBlindBool;
 
+    public TextMeshProUGUI nameText;
+
     public bool myTurn;
 
     private void Start()
@@ -53,7 +55,6 @@ public class PlayerBoy : MonoBehaviour
         betChips = 0;
         currentPlayerAction = PlayerAction.None;
         UpdateUITexts();
-
         PlayerChips = PlayerPrefs.GetInt(this.gameObject.name, 8000);
         Debug.Log(gameObject.name + PlayerChips);
     }
@@ -74,8 +75,8 @@ public class PlayerBoy : MonoBehaviour
         get { return playerChips; }
         set
         {
-            playerChips = value;
-            UpdateUITexts();
+            //playerChips = value;
+            //UpdateUITexts();
         }
     }
     public int BetChips
@@ -83,8 +84,8 @@ public class PlayerBoy : MonoBehaviour
         get { return betChips; }
         set
         {
-            betChips = value;
-            UpdateUITexts();
+            //betChips = value;
+            //UpdateUITexts();
         }
     }
 
@@ -205,25 +206,26 @@ public class PlayerBoy : MonoBehaviour
         currentPlayerAction = PlayerAction.None;
     }
 
+
     public void PlayerTurn()
     {
         GameInputManager.instance.DealDone();
         if (bigBlindBool && Dealer.instance.currentBet >= 200)
         {
-            playerChips -= GameInputManager.instance.localbetValue;
-            betChips += GameInputManager.instance.localbetValue;
+            Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
+            Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
             UpdateUITexts();
         }
         else if (smallBlindBool && Dealer.instance.currentBet >= 400)
         {
-            playerChips -= GameInputManager.instance.localbetValue;
-            betChips += GameInputManager.instance.localbetValue;
+            Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
+            Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
             UpdateUITexts();
         }
         else
         {
-            playerChips -= GameInputManager.instance.localbetValue;
-            betChips += GameInputManager.instance.localbetValue;
+            Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
+            Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
             UpdateUITexts();
         }
     }

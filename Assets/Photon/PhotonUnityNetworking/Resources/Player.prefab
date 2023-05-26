@@ -185,9 +185,16 @@ MonoBehaviour:
   playerChipsText: {fileID: 4763516406895382166}
   betChipsText: {fileID: 4763516408389721243}
   highlightedImage: {fileID: 4763516407784633327}
+  playerChips: 8000
+  betChips: 0
   currentPlayerAction: 0
   winnerPanel: {fileID: 4763516408444967985}
   dealerTag: {fileID: 4763516406916253319}
+  dealerBool: 0
+  bigBlindBool: 0
+  smallBlindBool: 0
+  nameText: {fileID: 4763516407600900846}
+  myTurn: 0
 --- !u!114 &-1734741373271138118
 MonoBehaviour:
   m_ObjectHideFlags: 0
