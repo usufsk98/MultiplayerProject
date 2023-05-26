@@ -95,7 +95,7 @@ public class PlayerDataManager : MonoBehaviour
     public void CallFunction()
     {
         GetComponent<PlayerBoy>().PlayerTurn();
-        Debug.Log(Dealer.instance.currentBet);
+        Debug.Log( "Calling from RPC -> " + Dealer.instance.currentBet);
 
         OnlineMultiplayerManager.instance.totalBetOverNetwork += Dealer.instance.currentBet;
     }
