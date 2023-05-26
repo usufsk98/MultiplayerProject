@@ -131,12 +131,19 @@ public class OnlineMultiplayerManager : MonoBehaviour
 
     public void EndTurn()
     {
-        Debug.Log(Dealer.instance.currentBet);
         _localPlayerDataManager.photonView.RPC("EndTurnRPC", RpcTarget.All);
         _localPlayerDataManager.photonView.RPC("TurnBoolTester", RpcTarget.All);
 
+        TurnChanges();
+    }
+
+    public void TurnChanges()
+    {
+        Debug.Log(Dealer.instance.currentBet);
+        _localPlayerDataManager.photonView.RPC("CallFunction", RpcTarget.All);
         lastBetLocalPlayer = Dealer.instance.currentBet;
         playerCurrentTotalBet += Dealer.instance.currentBet;
+        Debug.Log(Dealer.instance.currentBet);
     }
 
 }

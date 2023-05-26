@@ -76,8 +76,8 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         get { return dealerChips; }
         set
         {
-            dealerChips = value;
-            dealerText.text = "Pot: " + dealerChips;
+            //dealerChips = value;
+            //dealerText.text = "Pot: " + dealerChips;
         }
     }
 
@@ -88,8 +88,8 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         get { return currentBet; }
         set
         {
-            currentBet = value;
-            Debug.Log("--- Current " + currentBet);
+            //currentBet = value;
+            //Debug.Log("--- Current " + currentBet);
         }
     }
 
@@ -137,7 +137,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         yield return new WaitForSeconds(2f);
         StartCoroutine(GiveCardsInAManner());
         //CurrentBet = 400;
-        //GameInputManager.instance.SetValue(CurrentBet);
+        //GameInputManager.instance.SetValue(currentBet);
     }
 
     IEnumerator GiveCardsInAManner()
@@ -271,7 +271,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         if (currentPlayerBoy.currentPlayerAction == PlayerAction.Fold)
             NextPlayerTurn();
         else Debug.Log("Player Name" + currentPlayerBoy.name);
-        GameInputManager.instance.SetValue(CurrentBet - currentPlayerBoy.BetChips);
+        GameInputManager.instance.SetValue(currentBet - currentPlayerBoy.BetChips);
     }
 
     public void AddCoinsToPot()

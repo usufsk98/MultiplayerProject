@@ -152,9 +152,9 @@ public class PlayerBoy : MonoBehaviour
     public void Check()
     {
         currentPlayerAction = PlayerAction.Check;
-        InitialTurn(Dealer.instance.CurrentBet, 1);
+        InitialTurn(Dealer.instance.currentBet, 1);
 
-        Debug.Log(Dealer.instance.CurrentBet);
+        Debug.Log(Dealer.instance.currentBet);
         Debug.Log("Check Function");
     }
 
@@ -162,7 +162,7 @@ public class PlayerBoy : MonoBehaviour
     public void RaiseFactor(int raisedBetFactor)
     {
         currentPlayerAction = PlayerAction.Raise;
-        Dealer.instance.CurrentBet = raisedBetFactor + Dealer.instance.currentPlayerBoy.betChips;
+        Dealer.instance.currentBet = raisedBetFactor + Dealer.instance.currentPlayerBoy.betChips;
         InitialTurn(raisedBetFactor);
 
         Debug.Log("Check Function");
@@ -210,24 +210,28 @@ public class PlayerBoy : MonoBehaviour
     public void PlayerTurn()
     {
         GameInputManager.instance.DealDone();
-        if (bigBlindBool && Dealer.instance.currentBet >= 200)
-        {
-            Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
-            Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
-            UpdateUITexts();
-        }
-        else if (smallBlindBool && Dealer.instance.currentBet >= 400)
-        {
-            Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
-            Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
-            UpdateUITexts();
-        }
-        else
-        {
-            Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
-            Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
-            UpdateUITexts();
-        }
+        Debug.Log(Dealer.instance.currentBet);
+        Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
+        Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
+        UpdateUITexts();
+        //if (bigBlindBool && Dealer.instance.currentBet >= 200)
+        //{
+        //    Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
+        //    Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
+        //    UpdateUITexts();
+        //}
+        //else if (smallBlindBool && Dealer.instance.currentBet >= 400)
+        //{
+        //    Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
+        //    Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
+        //    UpdateUITexts();
+        //}
+        //else
+        //{
+        //    Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
+        //    Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
+        //    UpdateUITexts();
+        //}
     }
 
 }
