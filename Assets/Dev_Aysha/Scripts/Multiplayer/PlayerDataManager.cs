@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun.UtilityScripts;
 
-public class PlayerDataManager : MonoBehaviour
+public class PlayerDataManager : MonoBehaviourPunCallbacks
 {
     public static PlayerDataManager instance;
     public PhotonView photonView;
@@ -26,6 +26,8 @@ public class PlayerDataManager : MonoBehaviour
 
         GetComponent<PlayerBoy>().nameText.text = GetComponent<PhotonView>().Owner.NickName;
     }
+
+
 
     void Init()
     {
@@ -73,12 +75,6 @@ public class PlayerDataManager : MonoBehaviour
     }
 
     [PunRPC]
-    public void SendingAboutDealer()
-    {
-        Debug.Log(PhotonNetwork.MasterClient.NickName + " is the dealer");
-    }
-
-    [PunRPC]
     public void EndTurnRPC()
     {
         if (OnlineMultiplayerManager.instance.currentTurnIndex == PhotonNetwork.CurrentRoom.MaxPlayers)
@@ -89,6 +85,9 @@ public class PlayerDataManager : MonoBehaviour
         {
             OnlineMultiplayerManager.instance.currentTurnIndex++;
         }
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            photonView.RPC("SetMyTurnRPC", RpcTarget.All, false);
+        photonView.RPC("TurnBoolTester", RpcTarget.All);
     }
 
     [PunRPC]
@@ -97,13 +96,13 @@ public class PlayerDataManager : MonoBehaviour
         GetComponent<PlayerBoy>().PlayerTurn();
         Debug.Log( "Calling from RPC -> " + Dealer.instance.currentBet);
 
-        OnlineMultiplayerManager.instance.totalBetOverNetwork += Dealer.instance.currentBet;
+        GetComponent<PlayerBoy>().totalBetOverNetwork += Dealer.instance.currentBet;
+        Debug.Log("Total Bet Over Network ->" + GetComponent<PlayerBoy>().totalBetOverNetwork);
     }
 
     [PunRPC]
     public void TurnBoolTester()
     {
-        Debug.Log(OnlineMultiplayerManager.instance.currentTurnIndex);
         //foreach (var player in PhotonNetwork.PlayerList)
         //{
         //    if (player.ActorNumber == OnlineMultiplayerManager.instance.currentTurnIndex)
@@ -116,18 +115,29 @@ public class PlayerDataManager : MonoBehaviour
         //        OnlineMultiplayerManager.instance.turnEndButton.gameObject.SetActive(false);
         //    }
         //}
-
         if (PhotonNetwork.LocalPlayer.ActorNumber == OnlineMultiplayerManager.instance.currentTurnIndex)
-        { 
+        {
             Debug.Log("Player " + PhotonNetwork.LocalPlayer.ActorNumber + " turn");
             OnlineMultiplayerManager.instance.radialSliderButton.SetActive(true);
             OnlineMultiplayerManager.instance.foldButton.SetActive(true);
+            photonView.RPC("SetMyTurnRPC", RpcTarget.All, true);
         }
         else
         {
+            GetComponent<PlayerBoy>().myTurn = false;
             OnlineMultiplayerManager.instance.radialSliderButton.SetActive(false);
             OnlineMultiplayerManager.instance.foldButton.SetActive(false);
-        }   
+        }
+
+    }
+
+
+    [PunRPC]
+    public void SetMyTurnRPC(bool turn)
+    {
+        Debug.LogError("Before Set My Turn RPC -->");
+        GetComponent<PlayerBoy>().myTurn = turn;
+        Debug.LogError("After Set My Turn RPC -->");
     }
 
     void InitPlayer()

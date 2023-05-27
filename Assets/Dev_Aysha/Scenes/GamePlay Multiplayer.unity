@@ -1634,6 +1634,9 @@ MonoBehaviour:
   dealerBool: 0
   bigBlindBool: 0
   smallBlindBool: 0
+  lastBetLocalPlayer: 0
+  totalBetOverNetwork: 0
+  playerCurrentTotalBet: 0
   nameText: {fileID: 0}
   myTurn: 0
 --- !u!114 &238125276
@@ -3779,6 +3782,9 @@ MonoBehaviour:
   dealerBool: 0
   bigBlindBool: 0
   smallBlindBool: 0
+  lastBetLocalPlayer: 0
+  totalBetOverNetwork: 0
+  playerCurrentTotalBet: 0
   nameText: {fileID: 0}
   myTurn: 0
 --- !u!114 &569576489
@@ -5017,6 +5023,9 @@ MonoBehaviour:
   dealerBool: 0
   bigBlindBool: 0
   smallBlindBool: 0
+  lastBetLocalPlayer: 0
+  totalBetOverNetwork: 0
+  playerCurrentTotalBet: 0
   nameText: {fileID: 0}
   myTurn: 0
 --- !u!114 &722985585
@@ -10162,6 +10171,9 @@ MonoBehaviour:
   dealerBool: 0
   bigBlindBool: 0
   smallBlindBool: 0
+  lastBetLocalPlayer: 0
+  totalBetOverNetwork: 0
+  playerCurrentTotalBet: 0
   nameText: {fileID: 1670700672}
   myTurn: 0
 --- !u!114 &1486252194
@@ -10712,11 +10724,8 @@ MonoBehaviour:
   parentToSpawnObject: {fileID: 1927714490}
   radialSliderButton: {fileID: 263823121}
   foldButton: {fileID: 337400988}
-  playerCurrentTotalBet: 0
-  lastBetLocalPlayer: 0
-  totalBetOverNetwork: 0
   currentTurnIndex: 1
-  playerToInstantiate: {fileID: 7103463779970622798, guid: d4de798c4874b0943844b04d7865664d, type: 3}
+  playerToInstantiate: {fileID: 4763516406711540943, guid: 4dafaefe7e62b584594f505906c97c23, type: 3}
   _localPlayerDataManager: {fileID: 0}
   gameStarted: 0
   inGame: 0
@@ -12402,6 +12411,9 @@ MonoBehaviour:
   dealerBool: 0
   bigBlindBool: 0
   smallBlindBool: 0
+  lastBetLocalPlayer: 0
+  totalBetOverNetwork: 0
+  playerCurrentTotalBet: 0
   nameText: {fileID: 0}
   myTurn: 0
 --- !u!114 &1791719659

@@ -127,6 +127,7 @@
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
     <Compile Include="Assets\CustomPlugins\Demigiant\DOTweenPro\DOTweenDeUnityExtended.cs" />
     <Compile Include="Assets\Dev_Aysha\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\ParrelSync-master\Examples\CustomArgumentExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -145,6 +146,7 @@
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\ParrelSync-master\VERSION.txt" />
     <None Include="Assets\CustomPlugins\Demigiant\DOTween\DOTween.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\Photon\PhotonLibs\changes-library.txt" />
@@ -981,6 +983,10 @@
     <ProjectReference Include="PhotonUnityNetworking.Demos.csproj">
       <Project>{9D78CDA0-7D55-24CE-F32D-DBDB5ACE493B}</Project>
       <Name>PhotonUnityNetworking.Demos</Name>
+    </ProjectReference>
+    <ProjectReference Include="ParrelSync.csproj">
+      <Project>{D5129B34-0395-076F-3329-A41DA9142BD3}</Project>
+      <Name>ParrelSync</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

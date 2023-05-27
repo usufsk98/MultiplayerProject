@@ -44,6 +44,12 @@ public class PlayerBoy : MonoBehaviour
     public bool bigBlindBool;
     public bool smallBlindBool;
 
+    public int lastBetLocalPlayer;
+
+    public int totalBetOverNetwork;
+
+    public int playerCurrentTotalBet;
+
     public TextMeshProUGUI nameText;
 
     public bool myTurn;

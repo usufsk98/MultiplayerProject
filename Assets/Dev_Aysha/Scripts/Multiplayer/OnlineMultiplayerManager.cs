@@ -7,6 +7,7 @@ using Photon.Pun.UtilityScripts;
 public class OnlineMultiplayerManager : MonoBehaviour
 {
 
+
     public List<GameObject> playersList;
 
     public static OnlineMultiplayerManager instance;
@@ -19,11 +20,7 @@ public class OnlineMultiplayerManager : MonoBehaviour
     public GameObject radialSliderButton;
     public GameObject foldButton;
 
-    public int playerCurrentTotalBet;
-
-    public int lastBetLocalPlayer;
-
-    public int totalBetOverNetwork;
+    
 
     public int currentTurnIndex = 1;
 
@@ -76,7 +73,7 @@ public class OnlineMultiplayerManager : MonoBehaviour
         //UI_MatchIsStartingPopup matchPopup = (UI_MatchIsStartingPopup)UI_Manager.Instance.OpenIndepenedantPanel(typeof(UI_MatchIsStartingPopup));
         yield return new WaitForSeconds(1f);
         SettingPositions();
-        
+
         //OnPlayerJoinGame();
         inGame = true;
         PhotonNetwork.CurrentRoom.IsOpen = false;
@@ -94,16 +91,16 @@ public class OnlineMultiplayerManager : MonoBehaviour
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             imDealer = true;
-            _localPlayerDataManager.GetComponent<PhotonView>().RPC("SendingAboutDealer", RpcTarget.All);
             _localPlayerDataManager.GetComponent<PhotonView>().RPC("DealerTrue", RpcTarget.All);
             _localPlayerDataManager.photonView.RPC("PlayGameStarter", RpcTarget.All);
             if (_localPlayerDataManager.GetComponent<PlayerBoy>().dealerBool)
             {
                 _localPlayerDataManager.GetComponent<PhotonView>().RPC("DealerTagEnabler", RpcTarget.All);
             }
+            _localPlayerDataManager.photonView.RPC("TurnBoolTester", RpcTarget.All);
         }
         _localPlayerDataManager.GetComponent<PhotonView>().RPC("BigAndSmallBlindSetter", RpcTarget.All);
-        _localPlayerDataManager.photonView.RPC("TurnBoolTester", RpcTarget.All);
+       
 
         //UI_Manager.Instance.OpenPanel(typeof(UI_GamePlay), true);
     }
@@ -132,17 +129,15 @@ public class OnlineMultiplayerManager : MonoBehaviour
     public void EndTurn()
     {
         _localPlayerDataManager.photonView.RPC("EndTurnRPC", RpcTarget.All);
-        _localPlayerDataManager.photonView.RPC("TurnBoolTester", RpcTarget.All);
-
-        TurnChanges();
+        //TurnChanges();
     }
 
     public void TurnChanges()
     {
         Debug.Log(Dealer.instance.currentBet);
         _localPlayerDataManager.photonView.RPC("CallFunction", RpcTarget.All);
-        lastBetLocalPlayer = Dealer.instance.currentBet;
-        playerCurrentTotalBet += Dealer.instance.currentBet;
+        _localPlayerDataManager.GetComponent<PlayerBoy>().lastBetLocalPlayer = Dealer.instance.currentBet;
+        _localPlayerDataManager.GetComponent<PlayerBoy>().playerCurrentTotalBet += Dealer.instance.currentBet;
         Debug.Log(Dealer.instance.currentBet);
     }
 

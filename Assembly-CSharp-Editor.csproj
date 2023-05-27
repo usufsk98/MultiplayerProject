@@ -931,6 +931,10 @@
       <Project>{9D78CDA0-7D55-24CE-F32D-DBDB5ACE493B}</Project>
       <Name>PhotonUnityNetworking.Demos</Name>
     </ProjectReference>
+    <ProjectReference Include="ParrelSync.csproj">
+      <Project>{D5129B34-0395-076F-3329-A41DA9142BD3}</Project>
+      <Name>ParrelSync</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
