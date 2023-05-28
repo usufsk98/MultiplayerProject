@@ -126,7 +126,8 @@ public class PlayerBoy : MonoBehaviour
 
     public void Winner()
     {
-        winnerPanel.SetActive(true);
+        //Commented by Dev
+        //winnerPanel.SetActive(true);
     }
 
     public int PlayerChips

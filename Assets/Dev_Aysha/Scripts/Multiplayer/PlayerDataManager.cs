@@ -259,6 +259,52 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
         }
     }
 
+    //public void FoldButtonClick()
+    //{
+    //    playerBoy.Fold();
+    //    photonView.RPC("FoldButtonClickRPC", RpcTarget.All);
+    //    PhotonNetwork.LeaveRoom();
+    //    Debug.Log(OnlineMultiplayerManager.instance.playersList.Count);
+    //}
+
+    //[PunRPC]
+    //public void FoldButtonClickRPC()
+    //{
+
+    //    if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+    //    {
+    //        Debug.Log("You are the last left and you win");
+    //    }
+
+    //}
+
+
+
+    public void FoldButtonClick()
+    {
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            Debug.Log("You are the last left and you win");
+            
+        }
+        else
+        {
+            playerBoy.Fold();
+            photonView.RPC("FoldButtonClickRPC", RpcTarget.All);
+            PhotonNetwork.LeaveRoom();
+        }
+
+        Debug.Log(OnlineMultiplayerManager.instance.playersList.Count);
+    }
+
+    [PunRPC]
+    public void FoldButtonClickRPC()
+    {
+        Debug.Log("You are the only one left and you win through RPC");
+        GameInputManager.instance.winPanel.SetActive(true);
+    }
+
+
     void InitPlayer()
     {
         Debug.Log("Init Player");

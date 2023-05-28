@@ -68,6 +68,8 @@ MonoBehaviour:
   - PlayerRankSetterRPC
   - NextPlayerTurnRPC
   - SyncBettingValues
+  - AddingCoinsToPotRPC
+  - FoldButtonClickRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -148,4 +148,9 @@ public class OnlineMultiplayerManager : MonoBehaviour
         Debug.Log(Dealer.instance.currentBet);
     }
 
+    public void FoldButtonClick()
+    {
+        _localPlayerDataManager.FoldButtonClick();
+    }
+
 }

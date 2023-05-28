@@ -28,13 +28,15 @@ public class GameInputManager : MonoBehaviour
     public TextMeshProUGUI betValueText;
     public int localbetValue;
 
+    public GameObject winPanel;
+
     private void Awake()
     {
         instance = this;
     }
     private void Start()
     {
-        fold.onClick.AddListener(() => Fold());
+        //fold.onClick.AddListener(() => Fold());
         //check.onClick.AddListener(() => Check());
         //call.onClick.AddListener(() => Call());
         //done.onClick.AddListener(() => DealDone());
