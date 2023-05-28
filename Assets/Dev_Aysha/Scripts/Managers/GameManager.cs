@@ -23,4 +23,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
         //UI_Manager.instance.OpenPanel(typeof(UI_Gameplay), true);
     }
+    public void GameEnd()
+    {
+        SceneManager.LoadScene(0);
+        UI_Manager.instance.Init();
+    }
 }

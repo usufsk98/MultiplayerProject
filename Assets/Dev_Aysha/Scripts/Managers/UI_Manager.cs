@@ -36,13 +36,18 @@ public class UI_Manager : MonoBehaviour
     }
     void Start()
     {
+        Init();
+    }
+
+    public void Init()
+    {
         PlayerPrefsManager.Load();
-        if(PlayerPrefsManager.IsloggedInGuestValue== true.ToString())
+        if (PlayerPrefsManager.IsloggedInGuestValue == true.ToString())
         {
             OpenPanel(typeof(UI_MainMenu), false);
         }
         else
-             OpenPanel(typeof(UI_Login), false);
+            OpenPanel(typeof(UI_Login), false);
     }
     public UI_Panel OpenPanel(Type panelType, bool closeLastOpened = true)
     {

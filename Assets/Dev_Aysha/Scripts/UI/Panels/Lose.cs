@@ -8,6 +8,6 @@ public class Lose : MonoBehaviour
     public void Ok()
     {
         PhotonManager.instance.LeaveGameRoom();
-        SceneManager.LoadScene(0);
+        GameManager.instance.GameEnd();
     }
 }

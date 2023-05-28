@@ -100,7 +100,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoom
     public override void OnLeftRoom()
     {
         DebugLog.Log("Player Left the room");
-        SceneManager.LoadScene(0);
+        //SceneManager.LoadScene(0);
         base.OnLeftRoom();
     }
 
