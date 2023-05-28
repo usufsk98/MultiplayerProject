@@ -103,6 +103,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoom
         SceneManager.LoadScene(0);
         base.OnLeftRoom();
     }
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
@@ -113,6 +114,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoom
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            GameInputManager.instance.winPanel.SetActive(true);
+        }
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
