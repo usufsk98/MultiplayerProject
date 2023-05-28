@@ -9,6 +9,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
     public static PlayerDataManager instance;
     public PhotonView photonView;
     public GameObject playerPrefab;
+    public int playerBet = 0;
 
     private void Awake()
     {
@@ -85,8 +86,9 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
         {
             OnlineMultiplayerManager.instance.currentTurnIndex++;
         }
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
-            photonView.RPC("SetMyTurnRPC", RpcTarget.All, false);
+        //if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        if (OnlineMultiplayerManager.instance.imDealer)
+            photonView.RPC("SetMyTurnRPC", RpcTarget.Others, false);
         photonView.RPC("TurnBoolTester", RpcTarget.All);
     }
 
@@ -97,7 +99,10 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
         Debug.Log( "Calling from RPC -> " + Dealer.instance.currentBet);
 
         GetComponent<PlayerBoy>().totalBetOverNetwork += Dealer.instance.currentBet;
+        playerBet += Dealer.instance.currentBet;
         Debug.Log("Total Bet Over Network ->" + GetComponent<PlayerBoy>().totalBetOverNetwork);
+        GetComponent<PlayerBoy>().photonView.RPC("UpdateUITextsRPC", RpcTarget.All, GetComponent<PlayerBoy>().BetChips.ToString());
+
     }
 
     [PunRPC]
@@ -120,7 +125,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             Debug.Log("Player " + PhotonNetwork.LocalPlayer.ActorNumber + " turn");
             OnlineMultiplayerManager.instance.radialSliderButton.SetActive(true);
             OnlineMultiplayerManager.instance.foldButton.SetActive(true);
-            photonView.RPC("SetMyTurnRPC", RpcTarget.All, true);
+            photonView.RPC("SetMyTurnRPC", RpcTarget.Others, true);
         }
         else
         {
@@ -145,9 +150,19 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
         Debug.Log("Init Player");
         foreach (var player in PhotonNetwork.PlayerList) // 2 Players Room
         {
-            Debug.Log(player.NickName);
-            if (player.IsMasterClient)
+            Debug.Log(player.NickName+":"+player.UserId);
+            Debug.Log("local id: " + PhotonNetwork.LocalPlayer.UserId);
+            //if (player.IsMasterClient)
+            if(PhotonNetwork.LocalPlayer.UserId.Equals(player.UserId)) //Set 1st player as Dealer
+            {
                 OnlineMultiplayerManager.instance.Dealer.gameObject.SetActive(true);
+                OnlineMultiplayerManager.instance.imDealer = true;
+
+            }
+            else
+            {
+                break;
+            }
         }
 
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)

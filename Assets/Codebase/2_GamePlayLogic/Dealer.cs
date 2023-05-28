@@ -136,6 +136,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         //players[currentPlayer].InitialTurn(400, 2);
         yield return new WaitForSeconds(2f);
         StartCoroutine(GiveCardsInAManner());
+       
         //CurrentBet = 400;
         //GameInputManager.instance.SetValue(currentBet);
     }

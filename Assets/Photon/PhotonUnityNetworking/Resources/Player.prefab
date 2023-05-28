@@ -193,8 +193,12 @@ MonoBehaviour:
   dealerBool: 0
   bigBlindBool: 0
   smallBlindBool: 0
+  lastBetLocalPlayer: 0
+  totalBetOverNetwork: 0
+  playerCurrentTotalBet: 0
   nameText: {fileID: 4763516407600900846}
   myTurn: 0
+  photonView: {fileID: -1734741373271138118}
 --- !u!114 &-1734741373271138118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photonView: {fileID: -1734741373271138118}
   playerPrefab: {fileID: 4763516406711540977}
+  playerBet: 0
 --- !u!1 &4763516406895382168
 GameObject:
   m_ObjectHideFlags: 0

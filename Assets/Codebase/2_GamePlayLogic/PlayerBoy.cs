@@ -53,6 +53,7 @@ public class PlayerBoy : MonoBehaviour
     public TextMeshProUGUI nameText;
 
     public bool myTurn;
+    public PhotonView photonView;
 
     private void Start()
     {
@@ -63,6 +64,7 @@ public class PlayerBoy : MonoBehaviour
         UpdateUITexts();
         PlayerChips = PlayerPrefs.GetInt(this.gameObject.name, 8000);
         Debug.Log(gameObject.name + PlayerChips);
+        photonView = GetComponent<PhotonView>();
     }
 
     public void SetScore()
@@ -87,7 +89,9 @@ public class PlayerBoy : MonoBehaviour
     }
     public int BetChips
     {
-        get { return betChips; }
+        get {
+            return betChips; 
+        }
         set
         {
             //betChips = value;
@@ -99,8 +103,23 @@ public class PlayerBoy : MonoBehaviour
     {
         playerChipsText.text = "" + playerChips.ToString();
         betChipsText.text = "" + betChips.ToString();
+        //photonView.RPC("UpdateUITextsRPC", RpcTarget.All);
     }
 
+    [PunRPC]
+    public void UpdateUITextsRPC(string chipsBet)
+    {
+        if(photonView!=null)
+        {
+            if (!photonView.IsMine)
+            {
+                Debug.LogError(chipsBet);
+                //playerChipsText.text = "" + playerChips.ToString();
+                betChipsText.text = "" + chipsBet;
+            }
+        }
+        
+    }
     public void AddCard(Card card, Transform dealerPosition)
     {
         GeneratedCard generatedCard = cardPrefab.GetComponent<GeneratedCard>();

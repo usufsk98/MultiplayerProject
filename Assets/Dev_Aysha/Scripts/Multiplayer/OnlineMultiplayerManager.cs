@@ -88,7 +88,7 @@ public class OnlineMultiplayerManager : MonoBehaviour
         //Commented By Dev
         //gameStarted = true;
 
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        if (PhotonNetwork.LocalPlayer.UserId.Equals(PhotonNetwork.PlayerList[0].UserId))
         {
             imDealer = true;
             _localPlayerDataManager.GetComponent<PhotonView>().RPC("DealerTrue", RpcTarget.All);
@@ -128,8 +128,9 @@ public class OnlineMultiplayerManager : MonoBehaviour
 
     public void EndTurn()
     {
+        Debug.Log("end turn");
         _localPlayerDataManager.photonView.RPC("EndTurnRPC", RpcTarget.All);
-        //TurnChanges();
+        TurnChanges();
     }
 
     public void TurnChanges()
