@@ -12,7 +12,7 @@ public class UI_PlayersSelection : UI_Panel
 
     private void Start()
     {
-        PhotonManager.instance.maxPlayersInRoom = 5;
+        PhotonManager.instance.maxPlayersInRoom = 2;
     }
     public void Min()
     {
@@ -23,7 +23,7 @@ public class UI_PlayersSelection : UI_Panel
             PhotonManager.instance.maxPlayersInRoom = val;
         }
         //For now as Gameplay UI is setted for 5 .. hard code the value as 5 later will comment this 
-        PhotonManager.instance.maxPlayersInRoom = 5;
+        PhotonManager.instance.maxPlayersInRoom = 2;
     }
     public void Max()
     {
@@ -34,7 +34,7 @@ public class UI_PlayersSelection : UI_Panel
             PhotonManager.instance.maxPlayersInRoom = val;
         }
         //For now as Gameplay UI is setted for 5 .. hard code the value as 5 later will comment this 
-        PhotonManager.instance.maxPlayersInRoom = 5;
+        PhotonManager.instance.maxPlayersInRoom = 2;
     }
     public void CreatejoinRoom()
     {

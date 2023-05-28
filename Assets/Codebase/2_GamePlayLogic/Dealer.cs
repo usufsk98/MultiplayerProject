@@ -227,35 +227,86 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         }
         return count;
     }
+
+    [PunRPC]
+    public void NextPlayerTurnRPC()
+    {
+        //Commented by Dev
+        bool value = IsBettingRoundComplete();
+        if (value)
+        {
+            Debug.Log("-----Entered");
+            AddCoinsToPot();
+            // Do something for the completion
+            switch (pokerRoundManager.currentRound)
+            {
+                case RoundType.PreFlop:
+                    PreFlop();
+                    break;
+                case RoundType.Flop:
+                    Flop();
+                    break;
+                case RoundType.Turn:
+                    Turn();
+                    break;
+                case RoundType.River:
+                    GameCompleted();
+                    return;
+            }
+            pokerRoundManager.SetCurrentRound((RoundType)((int)pokerRoundManager.currentRound + 1));
+            foreach (PlayerBoy player in players)
+                player.ResetAction();
+            Dealer.instance.CurrentBet = 0;
+        }
+
+        //currentPlayer++;
+        //currentPlayer = (currentPlayer % players.Count);
+        //if (currentPlayer == 0) RevertColor(players.Count - 1);
+        //else RevertColor(currentPlayer - 1);
+
+        // Increment the current player's turn and wrap around to 1 if we reach the total number of players     
+        //SaveColor(currentPlayer);
+        //ChangeColor(currentPlayer);
+
+        //currentPlayerBoy = players[currentPlayer];
+        //Dev Comment
+        //currentPlayerBoy = OnlineMultiplayerManager.instance._localPlayerDataManager.GetComponent<PlayerBoy>();
+        if (currentPlayerBoy.currentPlayerAction == PlayerAction.Fold)
+            NextPlayerTurn();
+        else Debug.Log("Player Name" + currentPlayerBoy.name);
+        GameInputManager.instance.SetValue(currentBet - currentPlayerBoy.BetChips);
+    }
+
+
     public void NextPlayerTurn()
     {
         //Commented by Dev
-        //bool value = IsBettingRoundComplete();
-        //if (value)
-        //{
-        //    Debug.Log("-----Entered");
-        //    AddCoinsToPot();
-        //    // Do something for the completion
-        //    switch (pokerRoundManager.currentRound)
-        //    {
-        //        case RoundType.PreFlop:
-        //            PreFlop();
-        //            break;
-        //        case RoundType.Flop:
-        //            Flop();
-        //            break;
-        //        case RoundType.Turn:
-        //            Turn();
-        //            break;
-        //        case RoundType.River:
-        //            GameCompleted();
-        //            return;
-        //    }
-        //    pokerRoundManager.SetCurrentRound((RoundType)((int)pokerRoundManager.currentRound + 1));
-        //    foreach (PlayerBoy player in players)
-        //        player.ResetAction();
-        //    Dealer.instance.CurrentBet = 0;
-        //}
+        bool value = IsBettingRoundComplete();
+        if (value)
+        {
+            Debug.Log("-----Entered");
+            AddCoinsToPot();
+            // Do something for the completion
+            switch (pokerRoundManager.currentRound)
+            {
+                case RoundType.PreFlop:
+                    PreFlop();
+                    break;
+                case RoundType.Flop:
+                    Flop();
+                    break;
+                case RoundType.Turn:
+                    Turn();
+                    break;
+                case RoundType.River:
+                    GameCompleted();
+                    return;
+            }
+            pokerRoundManager.SetCurrentRound((RoundType)((int)pokerRoundManager.currentRound + 1));
+            foreach (PlayerBoy player in players)
+                player.ResetAction();
+            Dealer.instance.CurrentBet = 0;
+        }
 
         //currentPlayer++;
         //currentPlayer = (currentPlayer % players.Count);

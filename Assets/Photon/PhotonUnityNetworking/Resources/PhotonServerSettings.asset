@@ -64,6 +64,9 @@ MonoBehaviour:
   - EndTurnRPCall
   - EndTurnRPCCall
   - UpdateUITextsRPC
+  - InitialTurnRPC
+  - PlayerRankSetterRPC
+  - NextPlayerTurnRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

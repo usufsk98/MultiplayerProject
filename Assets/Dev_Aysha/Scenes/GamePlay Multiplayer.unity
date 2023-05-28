@@ -1617,6 +1617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a95948b9981a048b40a2faf1d42937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRankEnum: 0
   playerCards: []
   playerCardsPosition:
   - {fileID: 1861419888}
@@ -1639,6 +1640,7 @@ MonoBehaviour:
   playerCurrentTotalBet: 0
   nameText: {fileID: 0}
   myTurn: 0
+  photonView: {fileID: 0}
 --- !u!114 &238125276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2617,6 +2619,7 @@ GameObject:
   - component: {fileID: 410678735}
   - component: {fileID: 410678734}
   - component: {fileID: 410678736}
+  - component: {fileID: 410678737}
   m_Layer: 5
   m_Name: Dealer
   m_TagString: Untagged
@@ -2819,6 +2822,28 @@ MonoBehaviour:
     currentRound: 0
     roundText: {fileID: 565255177}
   currentBet: 0
+--- !u!114 &410678737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410678732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &417351551
 GameObject:
   m_ObjectHideFlags: 0
@@ -3765,6 +3790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a95948b9981a048b40a2faf1d42937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRankEnum: 0
   playerCards: []
   playerCardsPosition:
   - {fileID: 986677696}
@@ -3787,6 +3813,7 @@ MonoBehaviour:
   playerCurrentTotalBet: 0
   nameText: {fileID: 0}
   myTurn: 0
+  photonView: {fileID: 0}
 --- !u!114 &569576489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5006,6 +5033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a95948b9981a048b40a2faf1d42937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRankEnum: 0
   playerCards: []
   playerCardsPosition:
   - {fileID: 497130258}
@@ -5028,6 +5056,7 @@ MonoBehaviour:
   playerCurrentTotalBet: 0
   nameText: {fileID: 0}
   myTurn: 0
+  photonView: {fileID: 0}
 --- !u!114 &722985585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10154,6 +10183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a95948b9981a048b40a2faf1d42937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRankEnum: 0
   playerCards: []
   playerCardsPosition:
   - {fileID: 92634058}
@@ -10176,6 +10206,7 @@ MonoBehaviour:
   playerCurrentTotalBet: 0
   nameText: {fileID: 1670700672}
   myTurn: 0
+  photonView: {fileID: 0}
 --- !u!114 &1486252194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12394,6 +12425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a95948b9981a048b40a2faf1d42937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRankEnum: 0
   playerCards: []
   playerCardsPosition:
   - {fileID: 1093355325}
@@ -12416,6 +12448,7 @@ MonoBehaviour:
   playerCurrentTotalBet: 0
   nameText: {fileID: 0}
   myTurn: 0
+  photonView: {fileID: 0}
 --- !u!114 &1791719659
 MonoBehaviour:
   m_ObjectHideFlags: 0

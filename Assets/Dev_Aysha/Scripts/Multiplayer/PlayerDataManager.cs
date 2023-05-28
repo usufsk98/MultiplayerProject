@@ -11,6 +11,8 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
     public GameObject playerPrefab;
     public int playerBet = 0;
 
+    public PlayerBoy playerBoy;
+
     private void Awake()
     {
         if (instance == null)
@@ -24,11 +26,21 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
     {
         Init();
         OnlineMultiplayerManager.instance.AddPlayer(this);
-
         GetComponent<PlayerBoy>().nameText.text = GetComponent<PhotonView>().Owner.NickName;
+        playerBoy = GetComponent<PlayerBoy>();
+        ChipsTextEnabler();
     }
 
-
+    public void ChipsTextEnabler()
+    {
+        for (int i = 0; i < Dealer.instance.players.Count; i++)
+        {
+            if (Dealer.instance.players[i].photonView.IsMine)
+            {
+                Dealer.instance.players[i].playerChipsText.enabled = true;
+            }
+        }
+    }
 
     void Init()
     {
@@ -57,16 +69,17 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void BigAndSmallBlindSetter()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 2 && GetComponent<PhotonView>().IsMine)
-        {
-            GetComponent<PlayerBoy>().bigBlindBool = true;
-            Debug.Log("You are the big blind");
-        }
-        else if(PhotonNetwork.LocalPlayer.ActorNumber == 3 && GetComponent<PhotonView>().IsMine)
-        {
-            GetComponent<PlayerBoy>().smallBlindBool = true;
-            Debug.Log("You are the small blind");
-        }
+        GetComponent<PlayerBoy>().photonView.RPC("PlayerRankSetterRPC", RpcTarget.All);
+        //if (PhotonNetwork.LocalPlayer.ActorNumber == 2 && GetComponent<PhotonView>().IsMine)
+        //{
+        //    GetComponent<PlayerBoy>().bigBlindBool = true;
+        //    Debug.Log("You are the big blind");
+        //}
+        //else if(PhotonNetwork.LocalPlayer.ActorNumber == 3 && GetComponent<PhotonView>().IsMine)
+        //{
+        //    GetComponent<PlayerBoy>().smallBlindBool = true;
+        //    Debug.Log("You are the small blind");
+        //}
     }
 
     [PunRPC]
@@ -97,12 +110,10 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
     {
         GetComponent<PlayerBoy>().PlayerTurn();
         Debug.Log( "Calling from RPC -> " + Dealer.instance.currentBet);
-
-        GetComponent<PlayerBoy>().totalBetOverNetwork += Dealer.instance.currentBet;
         playerBet += Dealer.instance.currentBet;
-        Debug.Log("Total Bet Over Network ->" + GetComponent<PlayerBoy>().totalBetOverNetwork);
         GetComponent<PlayerBoy>().photonView.RPC("UpdateUITextsRPC", RpcTarget.All, GetComponent<PlayerBoy>().BetChips.ToString());
-
+        GetComponent<PlayerBoy>().photonView.RPC("InitialTurnRPC", RpcTarget.All, Dealer.instance.currentBet);
+        //Dealer.instance.GetComponent<PhotonView>().RPC("NextPlayerTurnRPC", RpcTarget.All);
     }
 
     [PunRPC]
@@ -143,6 +154,55 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
         Debug.LogError("Before Set My Turn RPC -->");
         GetComponent<PlayerBoy>().myTurn = turn;
         Debug.LogError("After Set My Turn RPC -->");
+    }
+
+    //Mine
+    //public void BettingValuesSetter()
+    //{
+    //    Debug.Log("Betting Values Setter");
+    //    playerBoy.lastBetLocalPlayer = Dealer.instance.currentBet;
+    //    playerBoy.playerCurrentTotalBet += playerBoy.lastBetLocalPlayer;
+    //}
+
+    //[PunRPC]
+    //public void BettingValuesSetterRPC(int lastBetLocal, int totalBetPlayer)
+    //{
+    //    if (photonView != null)
+    //    {
+    //        if (!photonView.IsMine)
+    //        {
+    //            Debug.Log("Betting Values Setter RPC");
+    //            lastBetLocal = playerBoy.lastBetLocalPlayer;
+    //            totalBetPlayer = playerBoy.playerCurrentTotalBet;
+    //        }
+    //    }
+    //}
+
+
+    public void BettingValuesSetter(ref int lastBetLocal, ref int totalBetPlayer)
+    {
+        if (photonView != null && photonView.IsMine)
+        {
+            playerBoy.lastBetLocalPlayer = Dealer.instance.currentBet;
+            lastBetLocal = playerBoy.lastBetLocalPlayer;
+            playerBoy.playerCurrentTotalBet += playerBoy.lastBetLocalPlayer;
+            totalBetPlayer = playerBoy.playerCurrentTotalBet;
+            // Send updated values to other instances
+            photonView.RPC("SyncBettingValues", RpcTarget.Others, lastBetLocal, totalBetPlayer);
+        }
+    }
+
+    [PunRPC]
+    public void SyncBettingValues(int lastBetLocal, int totalBetPlayer)
+    {
+        // Update the values received from the other instances
+        playerBoy.lastBetLocalPlayer = lastBetLocal;
+        playerBoy.playerCurrentTotalBet = totalBetPlayer;
+    }
+
+    public void AddCoinsToPot()
+    {
+
     }
 
     void InitPlayer()

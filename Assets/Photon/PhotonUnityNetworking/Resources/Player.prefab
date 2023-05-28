@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a95948b9981a048b40a2faf1d42937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRankEnum: 0
   playerCards: []
   playerCardsPosition:
   - {fileID: 4763516408105160612}
@@ -290,7 +291,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4763516406895382168}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 

@@ -23,6 +23,8 @@ public class PlayerBoy : MonoBehaviour
 {
     public enum PlayerRank { Dealer, SmallBlind, BigBlind }
 
+    public PlayerRank playerRankEnum;
+
     public List<Card> playerCards;
     public List<Transform> playerCardsPosition;
 
@@ -46,7 +48,7 @@ public class PlayerBoy : MonoBehaviour
 
     public int lastBetLocalPlayer;
 
-    public int totalBetOverNetwork;
+    public int betValueCurrent;
 
     public int playerCurrentTotalBet;
 
@@ -65,7 +67,56 @@ public class PlayerBoy : MonoBehaviour
         PlayerChips = PlayerPrefs.GetInt(this.gameObject.name, 8000);
         Debug.Log(gameObject.name + PlayerChips);
         photonView = GetComponent<PhotonView>();
+
+        
+        //PlayerRankSetter();
     }
+
+    public void PlayerRankSetter()
+    {
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            playerRankEnum = PlayerRank.Dealer;
+            Debug.Log("Player Rank is Dealer Local");
+        }
+        else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+        {
+            playerRankEnum = PlayerRank.BigBlind;
+            Debug.Log("Player Rank is Big Blind Local");
+        }
+        else if (PhotonNetwork.LocalPlayer.ActorNumber == 3)
+        {
+            playerRankEnum = PlayerRank.SmallBlind;
+            Debug.Log("Player Rank is Small Blind Local");
+        }
+    }
+
+    [PunRPC]
+    public void PlayerRankSetterRPC()
+    {
+        if (photonView != null)
+        {
+            if (!photonView.IsMine)
+            {
+                if (PhotonNetwork.LocalPlayer.IsMasterClient && !photonView.IsMine)
+                {
+                    playerRankEnum = PlayerRank.Dealer;
+                    Debug.Log("Player Rank is Dealer RPC");
+                }
+                else if (PhotonNetwork.LocalPlayer.ActorNumber == 2 && !photonView.IsMine)
+                {
+                    playerRankEnum = PlayerRank.BigBlind;
+                    Debug.Log("Player Rank is Big Blind RPC");
+                }
+                else if (PhotonNetwork.LocalPlayer.ActorNumber == 3 && !photonView.IsMine)
+                {
+                    playerRankEnum = PlayerRank.SmallBlind;
+                    Debug.Log("Player Rank is Small Blind RPC");
+                }
+            }
+        }   
+    }
+
 
     public void SetScore()
     {
@@ -109,7 +160,7 @@ public class PlayerBoy : MonoBehaviour
     [PunRPC]
     public void UpdateUITextsRPC(string chipsBet)
     {
-        if(photonView!=null)
+        if(photonView != null)
         {
             if (!photonView.IsMine)
             {
@@ -134,6 +185,21 @@ public class PlayerBoy : MonoBehaviour
         generatedCards.Add(cardObj.GetComponent<GeneratedCard>());
     }
 
+    [PunRPC]
+    public void InitialTurnRPC(int value)
+    {
+        if (photonView != null)
+        {
+            if (!photonView.IsMine)
+            {
+                int animationTimes = 1;
+                AnimationManager.instance.PlayAnimation(playerChipsText.transform, betChipsText.transform, animationTimes);
+                StartCoroutine(ChangeValue(animationTimes, value / 1));
+            }
+        }
+    }
+
+
     public void InitialTurn(int value, int animationTimes = 1)
     {
         AnimationManager.instance.PlayAnimation(playerChipsText.transform, betChipsText.transform, animationTimes);
@@ -150,7 +216,8 @@ public class PlayerBoy : MonoBehaviour
             animationTimes--;
         }
         yield return new WaitForSeconds(delayFactor * 1f);
-        Dealer.instance.NextPlayerTurn();
+        Dealer.instance.currentBet = 0;
+        //Dealer.instance.NextPlayerTurn();
     }
 
     public void Decide()
@@ -167,7 +234,7 @@ public class PlayerBoy : MonoBehaviour
             g.gameObject.SetActive(false);
         playerChipsText.gameObject.SetActive(false);
         betChipsText.gameObject.SetActive(false);
-        Dealer.instance.NextPlayerTurn();
+        //Dealer.instance.NextPlayerTurn();
 
         if (Dealer.instance.CheckAllFold() == 1)
             Dealer.instance.GameCompleted();
@@ -187,7 +254,9 @@ public class PlayerBoy : MonoBehaviour
     public void RaiseFactor(int raisedBetFactor)
     {
         currentPlayerAction = PlayerAction.Raise;
-        Dealer.instance.currentBet = raisedBetFactor + Dealer.instance.currentPlayerBoy.betChips;
+        //Commented By Dev
+        //Dealer.instance.currentBet = raisedBetFactor + Dealer.instance.currentPlayerBoy.betChips;
+        Dealer.instance.currentBet = raisedBetFactor;
         InitialTurn(raisedBetFactor);
 
         Debug.Log("Check Function");

@@ -518,7 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb2aea59003a1f4283eb49f94b3b387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minValue: 5
+  minValue: 2
   maxValue: 8
   valueText: {fileID: 5064288766801564189}
   val: 0

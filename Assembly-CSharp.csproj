@@ -65,6 +65,7 @@
     <Compile Include="Assets\Dev_Aysha\Scripts\Managers\PhotonManager.cs" />
     <Compile Include="Assets\Dev_Aysha\Scripts\Managers\WinningScenerio.cs" />
     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\SocketWebTcp.cs" />
+    <Compile Include="Assets\Dev_Aysha\Scripts\UI\Panels\UI_PlayersSelection.cs" />
     <Compile Include="Assets\Dev_Aysha\Scripts\Global\CombinationHandler.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChatAppIdCheckerUI.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\AppSettingsExtensions.cs" />
@@ -91,12 +92,15 @@
     <Compile Include="Assets\CustomPlugins\Demigiant\DOTweenPro\DOTweenDeAudio.cs" />
     <Compile Include="Assets\Codebase\Independent Managers\Interfaces\Interfaces.cs" />
     <Compile Include="Assets\Codebase\2_GamePlayLogic\WinnerDecider.cs" />
+    <Compile Include="Assets\Dev_Aysha\Scripts\UI\Panels\Win.cs" />
     <Compile Include="Assets\Dev_Aysha\Scripts\UI\Panels\UI_Settings.cs" />
+    <Compile Include="Assets\Dev_Aysha\Scripts\UI\Panels\Lose.cs" />
     <Compile Include="Assets\Dev_Aysha\Scripts\UI\Panels\UI_Login.cs" />
     <Compile Include="Assets\Codebase\Independent Managers\Abstract Classes\IndependentObject.cs" />
     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\WebSocket.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextButtonTransition.cs" />
     <Compile Include="Assets\Codebase\1_NonGameLogic\MainMenuBtn.cs" />
+    <Compile Include="Assets\ParrelSync-master\Examples\CustomArgumentExample.cs" />
     <Compile Include="Assets\Dev_Aysha\Scripts\UI\Panels\UI_MainMenu.cs" />
     <Compile Include="Assets\Codebase\2_GamePlayLogic\Dealer.cs" />
     <Compile Include="Assets\Dev_Aysha\Scripts\Multiplayer\PlayerDataManager.cs" />
@@ -127,7 +131,6 @@
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
     <Compile Include="Assets\CustomPlugins\Demigiant\DOTweenPro\DOTweenDeUnityExtended.cs" />
     <Compile Include="Assets\Dev_Aysha\Scripts\Managers\GameManager.cs" />
-    <Compile Include="Assets\ParrelSync-master\Examples\CustomArgumentExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -980,13 +983,13 @@
       <Project>{3CACEE76-AF58-E019-36EC-1C23C763DA77}</Project>
       <Name>PhotonUnityNetworking.Utilities</Name>
     </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Demos.csproj">
-      <Project>{9D78CDA0-7D55-24CE-F32D-DBDB5ACE493B}</Project>
-      <Name>PhotonUnityNetworking.Demos</Name>
-    </ProjectReference>
     <ProjectReference Include="ParrelSync.csproj">
       <Project>{D5129B34-0395-076F-3329-A41DA9142BD3}</Project>
       <Name>ParrelSync</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.Demos.csproj">
+      <Project>{9D78CDA0-7D55-24CE-F32D-DBDB5ACE493B}</Project>
+      <Name>PhotonUnityNetworking.Demos</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
