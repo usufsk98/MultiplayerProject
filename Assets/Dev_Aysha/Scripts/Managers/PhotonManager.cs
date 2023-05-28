@@ -16,7 +16,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoom
     public int testerInt;
     public static PhotonManager instance;
 
-     [HideInInspector]
     public bool joinedLobbyRoom = false;
     [HideInInspector]
     public bool joiningGameRoom;
@@ -83,6 +82,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoom
         else
         {
              PhotonNetwork.LocalPlayer.NickName = PlayerPrefsManager.UserCodeValue;
+            joinedLobbyRoom = true;
         }
         base.OnJoinedLobby();
     }
@@ -179,7 +179,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoom
         {
             ConnectToPhoton();
         }
-       
+
+        yield return new WaitUntil(() => joinedLobbyRoom == true);
         if (gameRooms.Count > 0)
         {
             foreach (var item in gameRooms)
@@ -188,7 +189,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoom
                 //if ((string)item.CustomProperties["MatchType"] == freeForAll)
                 {
                     //if (item.PlayerCount < item.MaxPlayers && item.IsOpen && item.MaxPlayers == playersCount)
-                    if (item.PlayerCount < item.MaxPlayers && item.IsOpen)
+                    if (item.PlayerCount < item.MaxPlayers && item.IsOpen && (item.MaxPlayers== maxPlayersInRoom))
                     {
                         PhotonNetwork.JoinRoom(item.Name);
                         DebugLog.Log("Join Room");
@@ -202,11 +203,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoom
     }
    
      public void CreateRoom(int maxPlayers, string matchType)
-    {
+     {
         if (!PhotonNetwork.IsConnected)
         {
             ConnectToPhoton();
         }
+
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = Convert.ToByte(maxPlayers);
         roomOptions.PublishUserId = true;

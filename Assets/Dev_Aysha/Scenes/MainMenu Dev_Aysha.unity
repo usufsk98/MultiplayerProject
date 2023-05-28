@@ -722,6 +722,7 @@ MonoBehaviour:
   - {fileID: 4220336256479030080, guid: 691ed0959ae169446a6c35fb443ac8ad, type: 3}
   - {fileID: 1400937459520697178, guid: 8f9ef0ffbe9822e429f44c153c21f418, type: 3}
   - {fileID: 4773039543878979505, guid: de816d9d62fd51341b2ba63c483230a6, type: 3}
+  - {fileID: 6578912828242977378, guid: df88d13a3c75a4a46a0ec8bd55bbfaaf, type: 3}
   openedIndependantPanel: {fileID: 0}
   stopOpenningPanels: 0
   lastOpenedPanelForAll: {fileID: 0}

@@ -336,9 +336,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1400937459520697178}
-        m_TargetAssemblyTypeName: UI_Info, Assembly-CSharp
-        m_MethodName: ClosePanel
+      - m_Target: {fileID: 5877200358854245060}
+        m_TargetAssemblyTypeName: Lose, Assembly-CSharp
+        m_MethodName: Ok
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -359,9 +359,9 @@ GameObject:
   - component: {fileID: 4056361241898556008}
   - component: {fileID: 4056361241898556010}
   - component: {fileID: 4056361241898556009}
-  - component: {fileID: 1400937459520697178}
+  - component: {fileID: 5877200358854245060}
   m_Layer: 5
-  m_Name: UI_Info
+  m_Name: UI_Lose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1400937459520697178
+--- !u!114 &5877200358854245060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -435,10 +435,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4056361241898556015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a4195fb5d17e0549889756ccf731015, type: 3}
+  m_Script: {fileID: 11500000, guid: 94dd5fbb43dcf3e41a141f80170ccb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messageText: {fileID: 2877863392848812722}
 --- !u!1 &5194696602150292241
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,7 +642,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 70
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 109
@@ -653,9 +652,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '
-
-'
+  m_Text: You Lose!!!
 --- !u!1 &8048294937346107058
 GameObject:
   m_ObjectHideFlags: 0
