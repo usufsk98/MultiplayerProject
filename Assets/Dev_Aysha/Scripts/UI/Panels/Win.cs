@@ -7,6 +7,7 @@ public class Win : MonoBehaviour
 {
     public void OK()
     {
+        PhotonManager.instance.LeaveGameRoom();
         SceneManager.LoadScene(0);
     }
 }
