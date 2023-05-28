@@ -25,7 +25,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
     public GameObject communityCardPrefab;
 
     // -------- DealerInfo ---------------
-    private int dealerChips = 0;
+    public int dealerChips = 0;
     public TextMeshProUGUI dealerText;
     public GameObject gameCompleted;
 
@@ -333,6 +333,8 @@ public class Dealer : Singleton_IndependentObject<Dealer>
             DealerChips += player.BetChips;
             player.BetChips = 0;
         }
+
+        Debug.Log("Dealer add coins to pot function");
     }
 
     public bool IsBettingRoundComplete()

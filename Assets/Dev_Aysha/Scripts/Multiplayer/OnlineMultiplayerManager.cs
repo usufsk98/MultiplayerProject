@@ -136,6 +136,8 @@ public class OnlineMultiplayerManager : MonoBehaviour
         TurnChanges();
         _localPlayerDataManager.BettingValuesSetter(ref playerBoy.lastBetLocalPlayer, ref playerBoy.playerCurrentTotalBet);
 
+        _localPlayerDataManager.AddCoinsToPotPlayerDataManager();
+
     }
 
     public void TurnChanges()

@@ -96,7 +96,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4763516406711540942
 RectTransform:
   m_ObjectHideFlags: 0
@@ -195,7 +195,7 @@ MonoBehaviour:
   bigBlindBool: 0
   smallBlindBool: 0
   lastBetLocalPlayer: 0
-  totalBetOverNetwork: 0
+  betValueCurrent: 0
   playerCurrentTotalBet: 0
   nameText: {fileID: 4763516407600900846}
   myTurn: 0
@@ -237,6 +237,7 @@ MonoBehaviour:
   photonView: {fileID: -1734741373271138118}
   playerPrefab: {fileID: 4763516406711540977}
   playerBet: 0
+  playerBoy: {fileID: 0}
 --- !u!1 &4763516406895382168
 GameObject:
   m_ObjectHideFlags: 0

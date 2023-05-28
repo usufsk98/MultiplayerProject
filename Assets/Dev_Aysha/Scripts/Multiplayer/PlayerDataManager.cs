@@ -13,6 +13,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
 
     public PlayerBoy playerBoy;
 
+    int betComparator = 1;
     private void Awake()
     {
         if (instance == null)
@@ -200,9 +201,62 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
         playerBoy.playerCurrentTotalBet = totalBetPlayer;
     }
 
-    public void AddCoinsToPot()
+    public void AddCoinsToPotPlayerDataManager()
     {
+        betComparator = 1;
+        for (int i = 1; i < Dealer.instance.players.Count; i++)
+        {
+            if (Dealer.instance.players[i].playerCurrentTotalBet == Dealer.instance.players[0].playerCurrentTotalBet)
+            {
+                betComparator++;
+                Debug.Log("Bets Match");
+            }
+            else
+            {
+                Debug.Log("Bets don't match");
+            }
+        }
 
+        if (betComparator == Dealer.instance.players.Count)
+        {
+            foreach (PlayerBoy player in Dealer.instance.players)
+            {
+                Debug.Log("Bets are matched, add coins to pot");
+                Dealer.instance.dealerChips += player.playerCurrentTotalBet;
+                player.BetChips = 0;
+                player.betChipsText.text = "Bet: ";
+                Dealer.instance.dealerText.text = "Pot: " + Dealer.instance.dealerChips.ToString();
+            }
+            photonView.RPC("AddingCoinsToPotRPC", RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    public void AddingCoinsToPotRPC() 
+    {
+        Debug.Log("Adding coins to pot through RPC");
+        for (int i = 1; i < Dealer.instance.players.Count; i++)
+        {
+            if (Dealer.instance.players[i].playerCurrentTotalBet == Dealer.instance.players[0].playerCurrentTotalBet)
+            {
+                betComparator++;
+                Debug.Log("Bets Match");
+            }
+            else
+            {
+                Debug.Log("Bets don't match");
+            }
+        }
+        if (betComparator == Dealer.instance.players.Count)
+        {
+            foreach (PlayerBoy player in Dealer.instance.players)
+            {
+                Dealer.instance.dealerChips += player.playerCurrentTotalBet;
+                player.BetChips = 0;
+                player.betChipsText.text = "Bet: ";
+                Dealer.instance.dealerText.text = "Pot: " + Dealer.instance.dealerChips.ToString();
+            }
+        }
     }
 
     void InitPlayer()
