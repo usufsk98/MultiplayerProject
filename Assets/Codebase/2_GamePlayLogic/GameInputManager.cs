@@ -29,6 +29,7 @@ public class GameInputManager : MonoBehaviour
     public int localbetValue;
 
     public GameObject winPanel;
+    public GameObject losePanel;
 
     private void Awake()
     {

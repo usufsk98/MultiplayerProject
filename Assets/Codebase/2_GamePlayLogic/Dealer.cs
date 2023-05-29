@@ -41,22 +41,22 @@ public class Dealer : Singleton_IndependentObject<Dealer>
 
     public void GameCompleted()
     {
-        GameInputManager.HideUI?.Invoke();
-        foreach (PlayerBoy playerBoy in players)
-            playerBoy.Showdown();
+        //GameInputManager.HideUI?.Invoke();
+        //foreach (PlayerBoy playerBoy in players)
+        //    playerBoy.Showdown();
 
-        List<PlayerBoy> playerBoys = new List<PlayerBoy>();
-        foreach (PlayerBoy boy in players)
-        {
-            if (boy.currentPlayerAction != PlayerAction.Fold)
-                playerBoys.Add(boy);
-        }
+        //List<PlayerBoy> playerBoys = new List<PlayerBoy>();
+        //foreach (PlayerBoy boy in players)
+        //{
+        //    if (boy.currentPlayerAction != PlayerAction.Fold)
+        //        playerBoys.Add(boy);
+        //}
 
-        WinningScenerio wS = FindObjectOfType<WinningScenerio>();
-        PlayerBoy winnerPlayer = wS.GetWinner(playerBoys, comunityCards);
-        AnimationManager.instance.PlayAnimation
-            (dealerText.transform, winnerPlayer.betChipsText.transform, 1);
-        StartCoroutine(CouroutineGameCompleted(winnerPlayer));
+        //WinningScenerio wS = FindObjectOfType<WinningScenerio>();
+        //PlayerBoy winnerPlayer = wS.GetWinner(playerBoys, comunityCards);
+        //AnimationManager.instance.PlayAnimation
+        //    (dealerText.transform, winnerPlayer.betChipsText.transform, 1);
+        //StartCoroutine(CouroutineGameCompleted(winnerPlayer));
     }
     IEnumerator CouroutineGameCompleted(PlayerBoy winnerPlayer)
     {
@@ -323,7 +323,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         if (currentPlayerBoy.currentPlayerAction == PlayerAction.Fold)
             NextPlayerTurn();
         else Debug.Log("Player Name" + currentPlayerBoy.name);
-        GameInputManager.instance.SetValue(currentBet - currentPlayerBoy.BetChips);
+        //GameInputManager.instance.SetValue(currentBet - currentPlayerBoy.BetChips);
     }
 
     public void AddCoinsToPot()

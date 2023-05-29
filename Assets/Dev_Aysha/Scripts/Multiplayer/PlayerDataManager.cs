@@ -224,6 +224,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
                 Debug.Log("Bets are matched, add coins to pot");
                 Dealer.instance.dealerChips += player.playerCurrentTotalBet;
                 player.BetChips = 0;
+                player.playerCurrentTotalBet = 0;
                 player.betChipsText.text = "Bet: ";
                 Dealer.instance.dealerText.text = "Pot: " + Dealer.instance.dealerChips.ToString();
             }
@@ -253,6 +254,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             {
                 Dealer.instance.dealerChips += player.playerCurrentTotalBet;
                 player.BetChips = 0;
+                player.playerCurrentTotalBet = 0;
                 player.betChipsText.text = "Bet: ";
                 Dealer.instance.dealerText.text = "Pot: " + Dealer.instance.dealerChips.ToString();
             }
@@ -290,8 +292,8 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
         else
         {
             playerBoy.Fold();
+            GameInputManager.instance.losePanel.SetActive(true);
             photonView.RPC("FoldButtonClickRPC", RpcTarget.All);
-            PhotonNetwork.LeaveRoom();
         }
 
         Debug.Log(OnlineMultiplayerManager.instance.playersList.Count);
