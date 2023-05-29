@@ -6,7 +6,7 @@ using Photon.Pun.UtilityScripts;
 
 public class OnlineMultiplayerManager : MonoBehaviour
 {
-
+    public bool firstTime = true;
 
     public List<GameObject> playersList;
 
@@ -21,7 +21,8 @@ public class OnlineMultiplayerManager : MonoBehaviour
     public GameObject foldButton;
 
     public PlayerBoy playerBoy;
-    
+
+    public List<Card> generatedCommunityCards = new();
 
     public int currentTurnIndex = 1;
 
@@ -34,6 +35,7 @@ public class OnlineMultiplayerManager : MonoBehaviour
     public bool inGame = false;
     public bool imDealer = false;
 
+    public int roundNumber = 1;
 
     private void Awake()
     {
@@ -41,7 +43,7 @@ public class OnlineMultiplayerManager : MonoBehaviour
             instance = this;
         else
             Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
 
@@ -69,6 +71,10 @@ public class OnlineMultiplayerManager : MonoBehaviour
 
     IEnumerator StartGameDelayed()
     {
+        if (roundNumber == 1)
+        {
+            currentTurnIndex = 2;
+        }
         PlayerInstantiate();
         
         //UI_MatchIsStartingPopup matchPopup = (UI_MatchIsStartingPopup)UI_Manager.Instance.OpenIndepenedantPanel(typeof(UI_MatchIsStartingPopup));
@@ -93,7 +99,10 @@ public class OnlineMultiplayerManager : MonoBehaviour
         {
             imDealer = true;
             _localPlayerDataManager.GetComponent<PhotonView>().RPC("DealerTrue", RpcTarget.All);
-            _localPlayerDataManager.photonView.RPC("PlayGameStarter", RpcTarget.All);
+            if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            {
+                _localPlayerDataManager.photonView.RPC("PlayGameStarter", RpcTarget.All);
+            }
             if (_localPlayerDataManager.GetComponent<PlayerBoy>().dealerBool)
             {
                 _localPlayerDataManager.photonView.RPC("DealerTagEnabler", RpcTarget.All);
@@ -101,10 +110,11 @@ public class OnlineMultiplayerManager : MonoBehaviour
             _localPlayerDataManager.photonView.RPC("TurnBoolTester", RpcTarget.All);
             //_localPlayerDataManager.GetComponent<PlayerBoy>().photonView.RPC("PlayerRankSetterRPC", RpcTarget.All);
         }
-        
 
+        //_localPlayerDataManager.CommunityCardsReplace();
 
         //UI_Manager.Instance.OpenPanel(typeof(UI_GamePlay), true);
+        _localPlayerDataManager.BettingValuesSetter(ref playerBoy.lastBetLocalPlayer, ref playerBoy.playerCurrentTotalBet);
     }
 
     public void PlayerInstantiate()

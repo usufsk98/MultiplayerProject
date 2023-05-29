@@ -113,11 +113,20 @@ public class Dealer : Singleton_IndependentObject<Dealer>
 
 
     }
-        
-    [PunRPC]
+
     public void PlayGameStarter()
     {
-        StartCoroutine(PlayGame());
+        //StartCoroutine(PlayGame());
+        GetComponent<PhotonView>().RPC("PlayGameFunction", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void PlayGameFunction()
+    {
+        Debug.Log("TestingPlayGameCoroutine");
+        GameInputManager.HideUI?.Invoke();
+        StartCoroutine(GiveCardsInAManner());
+
     }
 
 
@@ -134,9 +143,9 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         //players[currentPlayer].InitialTurn(200, 1);
         //yield return new WaitForSeconds(2.5f);
         //players[currentPlayer].InitialTurn(400, 2);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         StartCoroutine(GiveCardsInAManner());
-       
+
         //CurrentBet = 400;
         //GameInputManager.instance.SetValue(currentBet);
     }
@@ -165,6 +174,8 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         yield return new WaitForSeconds(0.1f);
         GameInputManager.ShowUI?.Invoke();
     }
+
+
     public void AddCommunityCard(Card card)
     {
         GeneratedCard generatedCard = communityCardPrefab.GetComponent<GeneratedCard>();
@@ -176,6 +187,8 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         cardObj.transform.DOMove(communityCardsTransform[comunityCards.Count - 1].position, 1f);
         cardObj.transform.DORotateQuaternion(communityCardsTransform[comunityCards.Count - 1].rotation, 1f);
         generatedCards.Add(cardObj.GetComponent<GeneratedCard>());
+
+
     }
 
     public void PreFlop()

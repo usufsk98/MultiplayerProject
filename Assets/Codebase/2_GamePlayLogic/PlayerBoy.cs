@@ -35,7 +35,7 @@ public class PlayerBoy : MonoBehaviour
     public TextMeshProUGUI betChipsText;
     public Image highlightedImage;
 
-    [SerializeField] int playerChips = 8000;
+    public int playerChips = 8000;
     [SerializeField] int betChips = 0;
 
     public PlayerAction currentPlayerAction;
