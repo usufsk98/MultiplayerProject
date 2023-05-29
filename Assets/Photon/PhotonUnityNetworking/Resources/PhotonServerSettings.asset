@@ -34,45 +34,29 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - AddingCoinsToPotRPC
+  - BigAndSmallBlindSetter
+  - CallFunction
   - ClickRpc
-  - DestroyRpc
-  - DestroySpaceship
-  - Fire
-  - RespawnSpaceship
-  - SendingAboutDealer
-  - PlayGame
-  - PositionSetting
-  - PlayGameStarter
   - DealerTagEnabler
   - DealerTrue
-  - TurningOnRadialSlider
-  - TurnChecker
-  - EndTurnFunctionButtonClick
+  - DestroyRpc
+  - DestroySpaceship
   - EndTurnRPC
-  - TurnBoolTester
-  - BigAndSmallBlindSetter
-  - Call
-  - CallFunctionRPC
-  - CallFunctionRPCCallFunctionRPC
-  - CallFunction
-  - PlayerTurn
-  - NameSetter
-  - SetName
-  - TurnSetterRPC
-  - SetMyTurnRPC
-  - EndTurn
-  - EndTurnRPCall
-  - EndTurnRPCCall
-  - UpdateUITextsRPC
-  - InitialTurnRPC
-  - PlayerRankSetterRPC
-  - NextPlayerTurnRPC
-  - SyncBettingValues
-  - AddingCoinsToPotRPC
+  - Fire
   - FoldButtonClickRPC
-  - GenerateCommunityCards
-  - CommunityCardsReplaceRPC
+  - InitialTurnRPC
+  - NextPlayerTurnRPC
+  - PlayerRankSetterRPC
   - PlayGameFunction
+  - PlayGameStarter
+  - RespawnSpaceship
+  - SetMyTurnRPC
+  - SettingBoolToFalse
+  - SyncBettingValues
+  - SyncSeed
+  - TurnBoolTester
+  - UpdateUITextsRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

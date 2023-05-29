@@ -7,6 +7,8 @@ using UnityEngine;
 public class WinningScenerio:MonoBehaviour 
 {
     #region Test Variables
+    public static WinningScenerio instance;
+
     [SerializeField] List<PlayerBoy> playersList;
     [SerializeField] List<Card> communityCardsList;
     #endregion
@@ -40,6 +42,12 @@ public class WinningScenerio:MonoBehaviour
     }
 
     [SerializeField] WinnerHand winnerHand;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
         //TestScenario();

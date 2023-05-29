@@ -7,11 +7,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
+
 public class Dealer : Singleton_IndependentObject<Dealer>
 {
     private const int cardsToEachPlayer = 2;
     private const int cardsToCommunity = 5;
-
     // -------- Deck ---------------
     public Deck deck;
 
@@ -97,7 +97,6 @@ public class Dealer : Singleton_IndependentObject<Dealer>
     void Start()
     {
         OnlineMultiplayerManager.instance.PopulatePlayers();
-        
         //currentDealer = PlayerPrefs.GetInt("currentDealer", 0);
         //players = GameInfo.RotateLeft(players, currentDealer);
         //gameCompleted.SetActive(false);
@@ -166,15 +165,28 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         }
 
         // deal five community cards
+        //if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        //{
+        //    for (int i = 0; i < cardsToCommunity; i++)
+        //    {
+        //        yield return new WaitForSeconds(0.3f);
+        //        AddCommunityCard(deck.DrawCard());
+        //    }
+        //}
+
+        // Deal community cards
+        List<Card> communityCards = new List<Card>();
         for (int i = 0; i < cardsToCommunity; i++)
         {
             yield return new WaitForSeconds(0.3f);
-            AddCommunityCard(deck.DrawCard());
+            Card card = deck.DrawCard();
+            AddCommunityCard(card);
+            communityCards.Add(card);
         }
+
         yield return new WaitForSeconds(0.1f);
         GameInputManager.ShowUI?.Invoke();
     }
-
 
     public void AddCommunityCard(Card card)
     {
@@ -187,8 +199,6 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         cardObj.transform.DOMove(communityCardsTransform[comunityCards.Count - 1].position, 1f);
         cardObj.transform.DORotateQuaternion(communityCardsTransform[comunityCards.Count - 1].rotation, 1f);
         generatedCards.Add(cardObj.GetComponent<GeneratedCard>());
-
-
     }
 
     public void PreFlop()

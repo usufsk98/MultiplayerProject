@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+
 
 public class GeneratedCard : MonoBehaviour
 {
@@ -29,4 +31,5 @@ public class GeneratedCard : MonoBehaviour
     }
 
     public void RavealCard(bool value) => unrevealed.enabled = !value;
+
 }

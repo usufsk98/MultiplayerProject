@@ -8,6 +8,8 @@ public class OnlineMultiplayerManager : MonoBehaviour
 {
     public bool firstTime = true;
 
+    public int generatedSeededNumber;
+
     public List<GameObject> playersList;
 
     public static OnlineMultiplayerManager instance;

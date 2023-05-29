@@ -10754,6 +10754,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8f121575e0a00469a1f43e6e2f8ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstTime: 1
+  generatedSeededNumber: 0
   playersList:
   - {fileID: 1486252191}
   - {fileID: 569576486}
@@ -10773,12 +10775,14 @@ MonoBehaviour:
   radialSliderButton: {fileID: 263823121}
   foldButton: {fileID: 337400988}
   playerBoy: {fileID: 0}
+  generatedCommunityCards: []
   currentTurnIndex: 1
   playerToInstantiate: {fileID: 4763516406711540943, guid: 4dafaefe7e62b584594f505906c97c23, type: 3}
   _localPlayerDataManager: {fileID: 0}
   gameStarted: 0
   inGame: 0
   imDealer: 0
+  roundNumber: 1
 --- !u!4 &1533896460
 Transform:
   m_ObjectHideFlags: 0

@@ -222,9 +222,16 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             photonView.RPC("SyncBettingValues", RpcTarget.Others, lastBetLocal, totalBetPlayer);
             playerBoy.photonView.RPC("UpdateUITextsRPC", RpcTarget.All, playerBoy.lastBetLocalPlayer.ToString());
             EndTurnForFirstRound();
-
         }
+    }
 
+    public void CheckingForWinner()
+    {
+        if (WinningScenerio.instance.GetWinner(Dealer.instance.players, Dealer.instance.comunityCards) == playerBoy)
+        {
+            Debug.Log("I win");
+            GameInputManager.instance.winPanel.SetActive(true);
+        }
     }
 
     public void EndTurnForFirstRound()
@@ -280,7 +287,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             {
                 Dealer.instance.PreFlop();
             }
-            photonView.RPC("AddingCoinsToPotRPC", RpcTarget.All);
+            photonView.RPC("AddingCoinsToPotRPC", RpcTarget.Others);
         }
     }
 
@@ -323,27 +330,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             else if (OnlineMultiplayerManager.instance.roundNumber == 4)
             {
                 Dealer.instance.Turn();
-            }
-        }
-    }
-
-    public void CommunityCardsReplace()
-    {
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
-        {
-            OnlineMultiplayerManager.instance.generatedCommunityCards = Dealer.instance.comunityCards;
-            photonView.RPC("CommunityCardsReplaceRPC", RpcTarget.All);
-        }   
-    }
-     
-    [PunRPC]
-    public void CommunityCardsReplaceRPC()
-    {
-        if (photonView != null)
-        {
-            if (!photonView.IsMine)
-            {
-                Dealer.instance.comunityCards = OnlineMultiplayerManager.instance.generatedCommunityCards;
+                CheckingForWinner();
             }
         }
     }

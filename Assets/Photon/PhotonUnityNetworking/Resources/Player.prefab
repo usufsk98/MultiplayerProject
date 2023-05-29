@@ -238,6 +238,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 4763516406711540977}
   playerBet: 0
   playerBoy: {fileID: 0}
+  betComparator: 1
 --- !u!1 &4763516406895382168
 GameObject:
   m_ObjectHideFlags: 0
