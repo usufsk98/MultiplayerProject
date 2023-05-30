@@ -172,14 +172,14 @@ public class PlayerBoy : MonoBehaviour
         }
         
     }
-    public void AddCard(Card card, Transform dealerPosition)
+    public void AddCard(Card card/*, Transform dealerPosition*/)
     {
         GeneratedCard generatedCard = cardPrefab.GetComponent<GeneratedCard>();
         generatedCard.SetValue(card);
         generatedCard.RavealCard(false);
 
         playerCards.Add(card);
-        GameObject cardObj = Instantiate(cardPrefab, dealerPosition);
+        GameObject cardObj = Instantiate(cardPrefab, this.transform);
         cardObj.transform.DOMove(playerCardsPosition[playerCards.Count - 1].position, 1f);
         cardObj.transform.DORotateQuaternion(playerCardsPosition[playerCards.Count - 1].rotation, 1f);
 
