@@ -116,6 +116,7 @@ public class OnlineMultiplayerManager : MonoBehaviour
         //_localPlayerDataManager.CommunityCardsReplace();
 
         //UI_Manager.Instance.OpenPanel(typeof(UI_GamePlay), true);
+
         _localPlayerDataManager.BettingValuesSetter(ref playerBoy.lastBetLocalPlayer, ref playerBoy.playerCurrentTotalBet);
     }
 

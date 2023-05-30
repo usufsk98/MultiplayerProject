@@ -95,7 +95,7 @@ public class GameInputManager : MonoBehaviour
     // ------------ Raise Panel for Now ----------
     public void DealDone()
     {
-        if (Dealer.instance.currentPlayerBoy.PlayerChips >= localbetValue)
+        if (Dealer.instance.currentPlayerBoy.PlayerChips >= localbetValue && Dealer.instance.currentPlayerBoy.photonView.IsMine)
         {
             Dealer.instance.currentPlayerBoy.RaiseFactor(localbetValue);
             raisePanel.SetActive(false);

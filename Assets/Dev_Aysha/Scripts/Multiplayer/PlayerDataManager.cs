@@ -188,8 +188,6 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             lastBetLocal = playerBoy.lastBetLocalPlayer;
             playerBoy.playerCurrentTotalBet += playerBoy.lastBetLocalPlayer;
             totalBetPlayer = playerBoy.playerCurrentTotalBet;
-            playerBoy.betChips = playerBoy.playerCurrentTotalBet;
-            playerBoy.playerChips -= playerBoy.playerCurrentTotalBet;
             // Send updated values to other instances
             photonView.RPC("SyncBettingValues", RpcTarget.Others, lastBetLocal, totalBetPlayer);
         }
@@ -209,8 +207,6 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             //Need to remove this line as this is for testing on two players
             playerBoy.photonView.RPC("UpdateUITextsRPC", RpcTarget.Others, playerBoy.playerCurrentTotalBet.ToString());
             EndTurnForFirstRound();
-
-            
         }
         if (PhotonNetwork.LocalPlayer.ActorNumber == 3 && OnlineMultiplayerManager.instance.roundNumber == 1 && OnlineMultiplayerManager.instance.firstTime)
         {
