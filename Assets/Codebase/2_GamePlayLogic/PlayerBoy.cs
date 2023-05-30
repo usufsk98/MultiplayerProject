@@ -174,18 +174,48 @@ public class PlayerBoy : MonoBehaviour
     }
     public void AddCard(Card card/*, Transform dealerPosition*/)
     {
+        Debug.LogError("ADD CARD__________");
         GeneratedCard generatedCard = cardPrefab.GetComponent<GeneratedCard>();
         generatedCard.SetValue(card);
         generatedCard.RavealCard(false);
 
         playerCards.Add(card);
         GameObject cardObj = Instantiate(cardPrefab, this.transform);
+        //GameObject cardObj = PhotonNetwork.Instantiate(cardPrefab.name, this.transform.position,this.transform.rotation);
         cardObj.transform.DOMove(playerCardsPosition[playerCards.Count - 1].position, 1f);
         cardObj.transform.DORotateQuaternion(playerCardsPosition[playerCards.Count - 1].rotation, 1f);
 
         generatedCards.Add(cardObj.GetComponent<GeneratedCard>());
+        
     }
+    [PunRPC]
+    public void AddCardRPC(int[] numbers/*, Transform dealerPosition*/)
+    {
+        Card card;
+        if (photonView != null)
+        {
+            if (!photonView.IsMine)
+            {
+                for (int i = 1; i < numbers.Length; i++)
+                {
+                    card = Dealer.instance.deck.cards[numbers[i]];
+                    Debug.LogError("ADD CARD RPC__________");
+                    GeneratedCard generatedCard = cardPrefab.GetComponent<GeneratedCard>();
+                    generatedCard.SetValue(card);
+                    generatedCard.RavealCard(false);
 
+                    playerCards.Add(card);
+                    GameObject cardObj = Instantiate(cardPrefab, this.transform);
+                    cardObj.transform.DOMove(playerCardsPosition[playerCards.Count - 1].position, 1f);
+                    cardObj.transform.DORotateQuaternion(playerCardsPosition[playerCards.Count - 1].rotation, 1f);
+
+                    generatedCards.Add(cardObj.GetComponent<GeneratedCard>());
+                }
+                
+            }
+        }
+       
+    }
     [PunRPC]
     public void InitialTurnRPC(int value)
     {

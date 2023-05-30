@@ -43,7 +43,15 @@ public class Dealer : Singleton_IndependentObject<Dealer>
     private int currentPlayer = 0;
     private Color previousColor;
     [SerializeField] PhotonView PhotonView;
-
+    public static Dealer instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else Destroy(gameObject);
+    }
     public void GameCompleted()
     {
         //GameInputManager.HideUI?.Invoke();
@@ -104,6 +112,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         OnlineMultiplayerManager.instance.PopulatePlayers();
         FillIntegerList();
         GettingFiveNumbers();
+       
         //currentDealer = PlayerPrefs.GetInt("currentDealer", 0);
         //players = GameInfo.RotateLeft(players, currentDealer);
         //gameCompleted.SetActive(false);
@@ -111,7 +120,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         pokerRoundManager.SetCurrentRound(RoundType.PreFlop);
         CurrentBet = 0;
         deck = new Deck();
-        GeneratePlayersCard();
+        
 
         //// ------ Players Should be declared as SB, BB
         //int currentPlayer = GameInfo.dealerindex;
@@ -125,18 +134,22 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         int numToRemove;
         if(PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            playerCardsIntegers.Clear();
+           
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
                 playerCardsIntegers.Add(i);
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 2; j++)
                 {
                    numToRemove = (UnityEngine.Random.Range(0, generatedCardsNumbers.Count));
                    playerCardsIntegers.Add(numToRemove);
+                    generatedCardsNumbers.RemoveAt(numToRemove);
                    //deck.cards.RemoveAt(numToRemove);
 
                 }
+                Debug.LogError("Call RPC: "+ PhotonNetwork.PlayerList.Length);
+                Debug.LogError("Call RPC INDEX: " + i);
                 GetComponent<PhotonView>().RPC("GeneratePlayerCards", RpcTarget.All, playerCardsIntegers.ToArray());
+                playerCardsIntegers.Clear();
             }
            
         }
@@ -152,12 +165,16 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         {
             for (int i = 1; i < numbers.Length; i++)
             {
-                Debug.LogError("Dech.cards: " + deck.cards);
+                Debug.LogError("Dech.cards: " + deck.Count());
                 Debug.LogError("Dech.cards num: " + numbers[i]);
+                Debug.LogError("Deck number " + deck.cards[numbers[i]]);
+                Debug.LogError("PLAYER BOY CURRENT " + currentPlayerBoy);
                 currentPlayerBoy.AddCard(deck.cards[numbers[i]]);
+               
+
                 deck.cards.RemoveAt(numbers[i]);
             }
-            
+            currentPlayerBoy.photonView.RPC("AddCardRPC", RpcTarget.All, playerCardsIntegers.ToArray());
         }
        
     }
@@ -182,7 +199,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         //players[currentPlayer].InitialTurn(400, 2);
         yield return new WaitForSeconds(2f);
         StartCoroutine(GiveCardsInAManner());
-
+        GeneratePlayersCard();
         //CurrentBet = 400;
         //GameInputManager.instance.SetValue(currentBet);
     }
