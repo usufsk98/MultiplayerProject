@@ -188,6 +188,8 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             lastBetLocal = playerBoy.lastBetLocalPlayer;
             playerBoy.playerCurrentTotalBet += playerBoy.lastBetLocalPlayer;
             totalBetPlayer = playerBoy.playerCurrentTotalBet;
+            playerBoy.betChips = playerBoy.playerCurrentTotalBet;
+            playerBoy.playerChips -= playerBoy.playerCurrentTotalBet;
             // Send updated values to other instances
             photonView.RPC("SyncBettingValues", RpcTarget.Others, lastBetLocal, totalBetPlayer);
         }
@@ -197,6 +199,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             lastBetLocal = playerBoy.lastBetLocalPlayer;
             playerBoy.playerCurrentTotalBet += playerBoy.lastBetLocalPlayer;
             totalBetPlayer = playerBoy.playerCurrentTotalBet;
+            playerBoy.betChips = playerBoy.lastBetLocalPlayer;
             playerBoy.betChipsText.text = playerBoy.lastBetLocalPlayer.ToString();
             playerBoy.playerChips = 7800;
             playerBoy.playerChipsText.text = playerBoy.playerChips.ToString();
@@ -204,7 +207,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             //Need to remove this line as this is for testing on two players
             photonView.RPC("SettingBoolToFalse", RpcTarget.All);
             //Need to remove this line as this is for testing on two players
-            playerBoy.photonView.RPC("UpdateUITextsRPC", RpcTarget.All, playerBoy.lastBetLocalPlayer.ToString());
+            playerBoy.photonView.RPC("UpdateUITextsRPC", RpcTarget.Others, playerBoy.playerCurrentTotalBet.ToString());
             EndTurnForFirstRound();
 
             
@@ -215,12 +218,13 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             lastBetLocal = playerBoy.lastBetLocalPlayer;
             playerBoy.playerCurrentTotalBet += playerBoy.lastBetLocalPlayer;
             totalBetPlayer = playerBoy.playerCurrentTotalBet;
+            playerBoy.betChips = playerBoy.lastBetLocalPlayer;
             playerBoy.betChipsText.text = playerBoy.lastBetLocalPlayer.ToString();
             playerBoy.playerChips = 7600;
             playerBoy.playerChipsText.text = playerBoy.playerChips.ToString();
             photonView.RPC("SettingBoolToFalse", RpcTarget.All);
             photonView.RPC("SyncBettingValues", RpcTarget.Others, lastBetLocal, totalBetPlayer);
-            playerBoy.photonView.RPC("UpdateUITextsRPC", RpcTarget.All, playerBoy.lastBetLocalPlayer.ToString());
+            playerBoy.photonView.RPC("UpdateUITextsRPC", RpcTarget.Others, playerBoy.playerCurrentTotalBet.ToString());
             EndTurnForFirstRound();
         }
     }
@@ -229,8 +233,11 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
     {
         if (WinningScenerio.instance.GetWinner(Dealer.instance.players, Dealer.instance.comunityCards) == playerBoy)
         {
-            Debug.Log("I win");
             GameInputManager.instance.winPanel.SetActive(true);
+        }
+        else
+        {
+            GameInputManager.instance.losePanel.SetActive(true);
         }
     }
 
@@ -252,6 +259,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
         // Update the values received from the other instances
         playerBoy.lastBetLocalPlayer = lastBetLocal;
         playerBoy.playerCurrentTotalBet = totalBetPlayer;
+
     }
 
     public void AddCoinsToPotPlayerDataManager()

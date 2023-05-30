@@ -36,7 +36,7 @@ public class PlayerBoy : MonoBehaviour
     public Image highlightedImage;
 
     public int playerChips = 8000;
-    [SerializeField] int betChips = 0;
+    public int betChips = 0;
 
     public PlayerAction currentPlayerAction;
     public GameObject winnerPanel;
@@ -212,8 +212,8 @@ public class PlayerBoy : MonoBehaviour
         while (animationTimes > 0)
         {
             yield return new WaitForSeconds(1.2f);
-            PlayerChips -= value;
-            BetChips += value;
+            playerChips -= value;
+            betChips += value;
             animationTimes--;
         }
         yield return new WaitForSeconds(delayFactor * 1f);
