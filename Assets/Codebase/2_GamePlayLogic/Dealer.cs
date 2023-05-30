@@ -12,6 +12,10 @@ public class Dealer : Singleton_IndependentObject<Dealer>
 {
     private const int cardsToEachPlayer = 2;
     private const int cardsToCommunity = 5;
+
+    public List<int> generatedCardsNumbers;
+
+    public List<int> communityCardsIntegers;
     // -------- Deck ---------------
     public Deck deck;
 
@@ -97,6 +101,8 @@ public class Dealer : Singleton_IndependentObject<Dealer>
     void Start()
     {
         OnlineMultiplayerManager.instance.PopulatePlayers();
+        FillIntegerList();
+        GettingFiveNumbers();
         //currentDealer = PlayerPrefs.GetInt("currentDealer", 0);
         //players = GameInfo.RotateLeft(players, currentDealer);
         //gameCompleted.SetActive(false);
@@ -104,7 +110,6 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         pokerRoundManager.SetCurrentRound(RoundType.PreFlop);
         CurrentBet = 0;
         deck = new Deck();
-        deck.Shuffle();
 
         //// ------ Players Should be declared as SB, BB
         //int currentPlayer = GameInfo.dealerindex;
@@ -113,21 +118,11 @@ public class Dealer : Singleton_IndependentObject<Dealer>
 
     }
 
+    [PunRPC]
     public void PlayGameStarter()
     {
-        //StartCoroutine(PlayGame());
-        GetComponent<PhotonView>().RPC("PlayGameFunction", RpcTarget.All);
+        StartCoroutine(PlayGame());
     }
-
-    [PunRPC]
-    public void PlayGameFunction()
-    {
-        Debug.Log("TestingPlayGameCoroutine");
-        GameInputManager.HideUI?.Invoke();
-        StartCoroutine(GiveCardsInAManner());
-
-    }
-
 
     public IEnumerator PlayGame()
     {
@@ -142,47 +137,78 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         //players[currentPlayer].InitialTurn(200, 1);
         //yield return new WaitForSeconds(2.5f);
         //players[currentPlayer].InitialTurn(400, 2);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         StartCoroutine(GiveCardsInAManner());
 
         //CurrentBet = 400;
         //GameInputManager.instance.SetValue(currentBet);
     }
 
+    public void FillIntegerList()
+    {
+        for (int i = 0; i < 52; i++)
+        {
+            generatedCardsNumbers.Add(i);
+        }
+    }
+
+    public void GettingFiveNumbers()
+    {
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                communityCardsIntegers.Add(UnityEngine.Random.Range(0, generatedCardsNumbers.Count));
+            }
+            GetComponent<PhotonView>().RPC("GettingFiveNumbersRPC", RpcTarget.Others, communityCardsIntegers.ToArray());
+        }
+    }
+
+    [PunRPC]
+    public void GettingFiveNumbersRPC(int[] numbers)
+    {
+        communityCardsIntegers.AddRange(numbers);
+    }
+
+    public void DealingCommunityCards()
+    {
+        for (int i = 0; i < communityCardsIntegers.Count; i++)
+        {
+            Debug.Log(communityCardsIntegers[i]);
+            AddCommunityCard(deck.cards[communityCardsIntegers[i]]);
+            deck.cards.RemoveAt(communityCardsIntegers[i]);
+        }
+    }
+
     IEnumerator GiveCardsInAManner()
     {
         currentPlayerBoy = OnlineMultiplayerManager.instance._localPlayerDataManager.GetComponent<PlayerBoy>();
         int cardsDealt = 0;
-        while (cardsDealt < cardsToEachPlayer)
-        {
-            for (int i = 0; i < players.Count; i++)
-            {
-                PlayerBoy currentPlayer = players[i];
-                currentPlayer.AddCard(deck.DrawCard(), this.transform);
-                yield return new WaitForSeconds(0.4f);
-            }
-            cardsDealt++;
-        }
 
-        // deal five community cards
-        //if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        //Commented For Testing
+        //while (cardsDealt < cardsToEachPlayer)
         //{
-        //    for (int i = 0; i < cardsToCommunity; i++)
+        //    for (int i = 0; i < players.Count; i++)
         //    {
-        //        yield return new WaitForSeconds(0.3f);
-        //        AddCommunityCard(deck.DrawCard());
+        //        PlayerBoy currentPlayer = players[i];
+        //        currentPlayer.AddCard(deck.DrawCard(), this.transform);
+        //        yield return new WaitForSeconds(0.4f);
         //    }
+        //    cardsDealt++;
         //}
 
-        // Deal community cards
-        List<Card> communityCards = new List<Card>();
-        for (int i = 0; i < cardsToCommunity; i++)
-        {
-            yield return new WaitForSeconds(0.3f);
-            Card card = deck.DrawCard();
-            AddCommunityCard(card);
-            communityCards.Add(card);
-        }
+        //Deal community cards
+        //List<Card> communityCards = new List<Card>();
+        //for (int i = 0; i < cardsToCommunity; i++)
+        //{
+        //    yield return new WaitForSeconds(0.3f);
+        //    Card card = deck.DrawCard();
+        //    AddCommunityCard(card);
+        //    communityCards.Add(card);
+        //}
+
+        //Dealing Community Cards Custom
+        DealingCommunityCards();
 
         yield return new WaitForSeconds(0.1f);
         GameInputManager.ShowUI?.Invoke();

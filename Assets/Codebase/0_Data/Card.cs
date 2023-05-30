@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public enum Suit
 {
@@ -97,7 +98,6 @@ public class Deck
 
     public void Shuffle()
     {
-        // shuffle the deck of cards using the Fisher-Yates shuffle algorithm
         for (int i = cards.Count - 1; i >= 1; i--)
         {
             int j = UnityEngine.Random.Range(0, i + 1);
