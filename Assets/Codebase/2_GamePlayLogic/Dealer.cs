@@ -182,16 +182,17 @@ public class Dealer : Singleton_IndependentObject<Dealer>
             //Debug.LogError("number[i]" + numbers[2]);
             //if (PhotonView.IsMine)
             {
-                for (int i = 1; i < numbers.Length; i++)
+                for (int j = 0; j < players.Count; j++)
                 {
                     //deck.cards.RemoveAt(numbers[i]);
-                    for (int j = 0; j < players.Count; j++)
+
+                    if (players[j].orderInPhoton.Equals(numbers[0])) 
                     {
-                        if (players[j].orderInPhoton.Equals(numbers[0]))
+                        for (int i = 1; i < numbers.Length; i++)
                         {
                             Debug.Log("Player ID number" + players[j].orderInPhoton);
                             Debug.Log("Player ID in coming" + (numbers[0]));
-                            players[numbers[0]].AddCard(deck.cards[numbers[i]]);
+                            players[j].AddCard(deck.cards[numbers[i]], players[j].orderInPhoton);
                         }
                     }
 

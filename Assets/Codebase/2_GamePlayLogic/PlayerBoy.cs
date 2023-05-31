@@ -206,11 +206,17 @@ public class PlayerBoy : MonoBehaviour
         }
         
     }
-    public void AddCard(Card card/*, Transform dealerPosition*/)
+    public void AddCard(Card card,int id /*, Transform dealerPosition*/)
     {
+       if(orderInPhoton!=id)
+        {
+            Debug.LogError("WRONG ID: ");
+                return;
+        }
        
        // GameObject cardObj = PhotonNetwork.Instantiate(cardPrefab.name, transform.position, transform.rotation);
         Debug.LogError("ADD CARD__________"+card.rank+card.suit);
+        Debug.LogError("Oder In PHOTON: "+orderInPhoton);
         GeneratedCard generatedCard = cardPrefab.GetComponent<GeneratedCard>();
         generatedCard.SetValue(card);
         generatedCard.RavealCard(false);
