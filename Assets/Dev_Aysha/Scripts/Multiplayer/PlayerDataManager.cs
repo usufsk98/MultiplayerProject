@@ -259,7 +259,6 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
         // Update the values received from the other instances
         playerBoy.lastBetLocalPlayer = lastBetLocal;
         playerBoy.playerCurrentTotalBet = totalBetPlayer;
-
     }
 
     [PunRPC]
@@ -329,9 +328,6 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             {
                 betComparator++;
                 Debug.Log("Bets Match");
-                playerBoy.playerChips -= playerBoy.betChips;
-                playerBoy.betChips = 0;
-                photonView.RPC("PlayerBetStatsSetterRPC", RpcTarget.All, playerBoy.playerChips, 0);
             }
             else
             {
