@@ -182,7 +182,7 @@ MonoBehaviour:
   - {fileID: 4763516408105160612}
   - {fileID: 4763516408081697781}
   generatedCards: []
-  cardPrefab: {fileID: 4325399453595221247, guid: 42f8074480d868444ae93ff4920a8e1c, type: 3}
+  cardPrefab: {fileID: 4325399453595221247, guid: a9e74ff730bd5ac46a1dd1c6c9cbeed5, type: 3}
   playerChipsText: {fileID: 4763516406895382166}
   betChipsText: {fileID: 4763516408389721243}
   highlightedImage: {fileID: 4763516407784633327}
@@ -200,6 +200,7 @@ MonoBehaviour:
   nameText: {fileID: 4763516407600900846}
   myTurn: 0
   photonView: {fileID: -1734741373271138118}
+  orderInPhoton: 0
 --- !u!114 &-1734741373271138118
 MonoBehaviour:
   m_ObjectHideFlags: 0

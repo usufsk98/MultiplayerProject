@@ -152,13 +152,10 @@ public class OnlineMultiplayerManager : MonoBehaviour
 
         _localPlayerDataManager.AddCoinsToPotPlayerDataManager();
 
-
-
     }
 
     public void TurnChanges()
     {
-        Debug.Log(Dealer.instance.currentBet);
         _localPlayerDataManager.photonView.RPC("CallFunction", RpcTarget.All);
         
         Debug.Log(Dealer.instance.currentBet);

@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
-
+using System.Linq;
 
 public class Dealer : Singleton_IndependentObject<Dealer>
 {
@@ -32,7 +32,6 @@ public class Dealer : Singleton_IndependentObject<Dealer>
     public int dealerChips = 0;
     public TextMeshProUGUI dealerText;
     public GameObject gameCompleted;
-
 
     int currentDealer = 0;
 
@@ -112,7 +111,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         OnlineMultiplayerManager.instance.PopulatePlayers();
         FillIntegerList();
         GettingFiveNumbers();
-       
+
         //currentDealer = PlayerPrefs.GetInt("currentDealer", 0);
         //players = GameInfo.RotateLeft(players, currentDealer);
         //gameCompleted.SetActive(false);
@@ -182,13 +181,12 @@ public class Dealer : Singleton_IndependentObject<Dealer>
             //Debug.LogError("number[i]" + numbers[2]);
             //if (PhotonView.IsMine)
             {
-                for (int j = 0; j < players.Count; j++)
+                for (int i = 1; i < numbers.Length; i++)
                 {
                     //deck.cards.RemoveAt(numbers[i]);
-
-                    if (players[j].orderInPhoton.Equals(numbers[0])) 
+                    for (int j = 0; j < players.Count; j++)
                     {
-                        for (int i = 1; i < numbers.Length; i++)
+                        if (players[j].orderInPhoton.Equals(numbers[0]))
                         {
                             Debug.Log("Player ID number" + players[j].orderInPhoton);
                             Debug.Log("Player ID in coming" + (numbers[0]));

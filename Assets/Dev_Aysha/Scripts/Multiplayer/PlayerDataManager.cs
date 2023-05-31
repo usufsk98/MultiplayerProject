@@ -110,11 +110,9 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
     public void CallFunction()
     {
         GetComponent<PlayerBoy>().PlayerTurn();
-        Debug.Log( "Calling from RPC -> " + Dealer.instance.currentBet);
-        playerBet += Dealer.instance.currentBet;
-        GetComponent<PlayerBoy>().photonView.RPC("UpdateUITextsRPC", RpcTarget.All, GetComponent<PlayerBoy>().BetChips.ToString());
-        GetComponent<PlayerBoy>().photonView.RPC("InitialTurnRPC", RpcTarget.All, Dealer.instance.currentBet);
-        //Dealer.instance.GetComponent<PhotonView>().RPC("NextPlayerTurnRPC", RpcTarget.All);
+        GetComponent<PlayerBoy>().photonView.RPC("UpdateUITextsRPC", RpcTarget.All, GetComponent<PlayerBoy>().betChips.ToString());
+
+        //GetComponent<PlayerBoy>().photonView.RPC("InitialTurnRPC", RpcTarget.All, Dealer.instance.currentBet);
     }
 
     [PunRPC]
@@ -184,6 +182,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
     {
         if (photonView != null && photonView.IsMine)
         {
+            GameInputManager.instance.localbetValue = Dealer.instance.currentBet;
             playerBoy.lastBetLocalPlayer = Dealer.instance.currentBet;
             lastBetLocal = playerBoy.lastBetLocalPlayer;
             playerBoy.playerCurrentTotalBet += playerBoy.lastBetLocalPlayer;
@@ -227,12 +226,14 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
 
     public void CheckingForWinner()
     {
-        if (WinningScenerio.instance.GetWinner(Dealer.instance.players, Dealer.instance.comunityCards) == playerBoy)
+        if (WinningScenerio.instance.GetWinner(Dealer.instance.players, Dealer.instance.comunityCards) == Dealer.instance.currentPlayerBoy)
         {
+            Debug.Log(WinningScenerio.instance.GetWinner(Dealer.instance.players, Dealer.instance.comunityCards));
             GameInputManager.instance.winPanel.SetActive(true);
         }
         else
         {
+            Debug.Log(WinningScenerio.instance.GetWinner(Dealer.instance.players, Dealer.instance.comunityCards));
             GameInputManager.instance.losePanel.SetActive(true);
         }
     }
@@ -267,6 +268,8 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             {
                 betComparator++;
                 Debug.Log("Bets Match");
+                Dealer.instance.currentPlayerBoy.betChips = 0;
+                Dealer.instance.currentPlayerBoy.photonView.RPC("UpdateUITextsRPC", RpcTarget.All, "0");                                                                                                
             }
             else
             {
@@ -280,9 +283,9 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             {
                 Debug.Log("Bets are matched, add coins to pot");
                 Dealer.instance.dealerChips += player.playerCurrentTotalBet;
-                player.BetChips = 0;
+                player.betChips = 0;
                 player.playerCurrentTotalBet = 0;
-                player.betChipsText.text = "Bet: ";
+                player.betChipsText.text = " ";
                 Dealer.instance.dealerText.text = "Pot: " + Dealer.instance.dealerChips.ToString();
                 betComparator = 1;
             }
@@ -290,6 +293,19 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             if (OnlineMultiplayerManager.instance.roundNumber == 2)
             {
                 Dealer.instance.PreFlop();
+            }
+            if (OnlineMultiplayerManager.instance.roundNumber == 2)
+            {
+                Dealer.instance.PreFlop();
+            }
+            else if (OnlineMultiplayerManager.instance.roundNumber == 3)
+            {
+                Dealer.instance.Flop();
+            }
+            else if (OnlineMultiplayerManager.instance.roundNumber == 4)
+            {
+                Dealer.instance.Turn();
+                CheckingForWinner();
             }
             photonView.RPC("AddingCoinsToPotRPC", RpcTarget.Others);
         }
@@ -305,6 +321,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             {
                 betComparator++;
                 Debug.Log("Bets Match");
+                Dealer.instance.currentPlayerBoy.betChips = 0;
             }
             else
             {
@@ -316,9 +333,9 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             foreach (PlayerBoy player in Dealer.instance.players)
             {
                 Dealer.instance.dealerChips += player.playerCurrentTotalBet;
-                player.BetChips = 0;
+                player.betChips = 0;
                 player.playerCurrentTotalBet = 0;
-                player.betChipsText.text = "Bet: ";
+                player.betChipsText.text = " ";
                 Dealer.instance.dealerText.text = "Pot: " + Dealer.instance.dealerChips.ToString();
                 betComparator = 1;
             }

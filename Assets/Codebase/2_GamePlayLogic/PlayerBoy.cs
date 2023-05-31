@@ -290,9 +290,11 @@ public class PlayerBoy : MonoBehaviour
         int delayFactor = animationTimes;
         while (animationTimes > 0)
         {
-            yield return new WaitForSeconds(1.2f);
+            yield return new WaitForSeconds(0f);
             playerChips -= value;
             betChips += value;
+            Dealer.instance.currentPlayerBoy.UpdateUITexts();
+            GameInputManager.instance.SetValue(0);
             animationTimes--;
         }
         yield return new WaitForSeconds(delayFactor * 1f);
@@ -385,27 +387,9 @@ public class PlayerBoy : MonoBehaviour
     {
         GameInputManager.instance.DealDone();
         Debug.Log(Dealer.instance.currentBet);
-        Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
-        Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
+        //Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
+        //Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
         UpdateUITexts();
-        //if (bigBlindBool && Dealer.instance.currentBet >= 200)
-        //{
-        //    Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
-        //    Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
-        //    UpdateUITexts();
-        //}
-        //else if (smallBlindBool && Dealer.instance.currentBet >= 400)
-        //{
-        //    Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
-        //    Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
-        //    UpdateUITexts();
-        //}
-        //else
-        //{
-        //    Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
-        //    Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
-        //    UpdateUITexts();
-        //}
     }
 
 }

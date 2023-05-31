@@ -95,13 +95,14 @@ public class GameInputManager : MonoBehaviour
     // ------------ Raise Panel for Now ----------
     public void DealDone()
     {
-        if (Dealer.instance.currentPlayerBoy.PlayerChips >= localbetValue && Dealer.instance.currentPlayerBoy.photonView.IsMine)
+        if (Dealer.instance.currentPlayerBoy.playerChips >= localbetValue)
         {
             Dealer.instance.currentPlayerBoy.RaiseFactor(localbetValue);
             raisePanel.SetActive(false);
 
             DelayUI();
         }
+
         //else
         //{
         //    Debug.Log("Player doesn't have enough chips to raise.");
