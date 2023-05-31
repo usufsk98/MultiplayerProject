@@ -188,7 +188,7 @@ public class PlayerBoy : MonoBehaviour
     public void UpdateUITexts()
     {
         playerChipsText.text = "" + playerChips.ToString();
-        betChipsText.text = "" + betChips.ToString();
+        betChipsText.text = "" + playerCurrentTotalBet.ToString();
         //photonView.RPC("UpdateUITextsRPC", RpcTarget.All);
     }
 
@@ -293,12 +293,14 @@ public class PlayerBoy : MonoBehaviour
             yield return new WaitForSeconds(0f);
             playerChips -= value;
             betChips += value;
-            Dealer.instance.currentPlayerBoy.UpdateUITexts();
-            GameInputManager.instance.SetValue(0);
+            
             animationTimes--;
         }
         yield return new WaitForSeconds(delayFactor * 1f);
+        UpdateUITexts();
+        photonView.RPC("UpdateUITextsRPC", RpcTarget.All, betChips.ToString());
         Dealer.instance.currentBet = 0;
+        GameInputManager.instance.SetValue(0);
         //Dealer.instance.NextPlayerTurn();
     }
 
@@ -387,8 +389,6 @@ public class PlayerBoy : MonoBehaviour
     {
         GameInputManager.instance.DealDone();
         Debug.Log(Dealer.instance.currentBet);
-        //Dealer.instance.currentPlayerBoy.playerChips -= GameInputManager.instance.localbetValue;
-        //Dealer.instance.currentPlayerBoy.betChips += GameInputManager.instance.localbetValue;
         UpdateUITexts();
     }
 

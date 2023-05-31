@@ -146,6 +146,7 @@ public class OnlineMultiplayerManager : MonoBehaviour
     {
         Debug.Log("end turn");
         _localPlayerDataManager.photonView.RPC("EndTurnRPC", RpcTarget.All);
+
         TurnChanges();
 
         _localPlayerDataManager.BettingValuesSetter(ref playerBoy.lastBetLocalPlayer, ref playerBoy.playerCurrentTotalBet);

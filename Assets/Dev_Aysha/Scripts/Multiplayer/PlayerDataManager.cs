@@ -110,9 +110,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
     public void CallFunction()
     {
         GetComponent<PlayerBoy>().PlayerTurn();
-        GetComponent<PlayerBoy>().photonView.RPC("UpdateUITextsRPC", RpcTarget.All, GetComponent<PlayerBoy>().betChips.ToString());
-
-        //GetComponent<PlayerBoy>().photonView.RPC("InitialTurnRPC", RpcTarget.All, Dealer.instance.currentBet);
+        playerBoy.photonView.RPC("InitialTurnRPC", RpcTarget.All, Dealer.instance.currentBet);
     }
 
     [PunRPC]
@@ -187,6 +185,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             lastBetLocal = playerBoy.lastBetLocalPlayer;
             playerBoy.playerCurrentTotalBet += playerBoy.lastBetLocalPlayer;
             totalBetPlayer = playerBoy.playerCurrentTotalBet;
+            playerBoy.betChips += playerBoy.betValueCurrent;
             // Send updated values to other instances
             photonView.RPC("SyncBettingValues", RpcTarget.Others, lastBetLocal, totalBetPlayer);
         }
@@ -285,7 +284,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
                 Dealer.instance.dealerChips += player.playerCurrentTotalBet;
                 player.betChips = 0;
                 player.playerCurrentTotalBet = 0;
-                player.betChipsText.text = " ";
+                player.betChipsText.text = "0";
                 Dealer.instance.dealerText.text = "Pot: " + Dealer.instance.dealerChips.ToString();
                 betComparator = 1;
             }
@@ -335,7 +334,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
                 Dealer.instance.dealerChips += player.playerCurrentTotalBet;
                 player.betChips = 0;
                 player.playerCurrentTotalBet = 0;
-                player.betChipsText.text = " ";
+                player.betChipsText.text = "0";
                 Dealer.instance.dealerText.text = "Pot: " + Dealer.instance.dealerChips.ToString();
                 betComparator = 1;
             }
