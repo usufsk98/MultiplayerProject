@@ -110,6 +110,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
     public void CallFunction()
     {
         GetComponent<PlayerBoy>().PlayerTurn();
+        playerBoy.photonView.RPC("UpdateUITextsRPC", RpcTarget.All, playerBoy.betChips.ToString());
         playerBoy.photonView.RPC("InitialTurnRPC", RpcTarget.All, Dealer.instance.currentBet);
     }
 
@@ -188,6 +189,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             playerBoy.betChips += playerBoy.betValueCurrent;
             // Send updated values to other instances
             photonView.RPC("SyncBettingValues", RpcTarget.Others, lastBetLocal, totalBetPlayer);
+            photonView.RPC("PlayerBetStatsSetterRPC", RpcTarget.All, playerBoy.playerChips, playerBoy.betChips);
         }
         if (PhotonNetwork.LocalPlayer.ActorNumber == 2 && OnlineMultiplayerManager.instance.roundNumber == 1 && OnlineMultiplayerManager.instance.firstTime)
         {
@@ -200,6 +202,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             playerBoy.playerChips = 7800;
             playerBoy.playerChipsText.text = playerBoy.playerChips.ToString();
             photonView.RPC("SyncBettingValues", RpcTarget.Others, lastBetLocal, totalBetPlayer);
+            photonView.RPC("PlayerBetStatsSetterRPC", RpcTarget.All, playerBoy.playerChips, playerBoy.betChips);
             //Need to remove this line as this is for testing on two players
             photonView.RPC("SettingBoolToFalse", RpcTarget.All);
             //Need to remove this line as this is for testing on two players
@@ -217,7 +220,8 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             playerBoy.playerChips = 7600;
             playerBoy.playerChipsText.text = playerBoy.playerChips.ToString();
             photonView.RPC("SettingBoolToFalse", RpcTarget.All);
-            photonView.RPC("SyncBettingValues", RpcTarget.Others, lastBetLocal, totalBetPlayer);
+            photonView.RPC("SyncBettingValues", RpcTarget.All, lastBetLocal, totalBetPlayer);
+            photonView.RPC("PlayerBetStatsSetterRPC", RpcTarget.Others, playerBoy.playerChips, playerBoy.betChips);
             playerBoy.photonView.RPC("UpdateUITextsRPC", RpcTarget.Others, playerBoy.playerCurrentTotalBet.ToString());
             EndTurnForFirstRound();
         }
@@ -258,6 +262,13 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
 
     }
 
+    [PunRPC]
+    public void PlayerBetStatsSetterRPC(int playerChips, int betChips)
+    {
+        playerBoy.playerChips = playerChips;
+        playerBoy.betChips = betChips;
+    }
+
     public void AddCoinsToPotPlayerDataManager()
     {
         betComparator = 1;
@@ -267,8 +278,6 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             {
                 betComparator++;
                 Debug.Log("Bets Match");
-                Dealer.instance.currentPlayerBoy.betChips = 0;
-                Dealer.instance.currentPlayerBoy.photonView.RPC("UpdateUITextsRPC", RpcTarget.All, "0");                                                                                                
             }
             else
             {
@@ -287,6 +296,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
                 player.betChipsText.text = "0";
                 Dealer.instance.dealerText.text = "Pot: " + Dealer.instance.dealerChips.ToString();
                 betComparator = 1;
+
             }
             OnlineMultiplayerManager.instance.roundNumber++;
             if (OnlineMultiplayerManager.instance.roundNumber == 2)
@@ -306,7 +316,10 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
                 Dealer.instance.Turn();
                 CheckingForWinner();
             }
-            photonView.RPC("AddingCoinsToPotRPC", RpcTarget.Others);
+            photonView.RPC("AddingCoinsToPotRPC", RpcTarget.Others); 
+            playerBoy.playerChips -= playerBoy.betChips;
+            playerBoy.betChips = 0;
+            photonView.RPC("PlayerBetStatsSetterRPC", RpcTarget.All, playerBoy.playerChips, 0);
         }
     }
 
@@ -320,7 +333,9 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             {
                 betComparator++;
                 Debug.Log("Bets Match");
-                Dealer.instance.currentPlayerBoy.betChips = 0;
+                playerBoy.playerChips -= playerBoy.betChips;
+                playerBoy.betChips = 0;
+                photonView.RPC("PlayerBetStatsSetterRPC", RpcTarget.All, playerBoy.playerChips, 0);
             }
             else
             {
@@ -352,6 +367,9 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
                 Dealer.instance.Turn();
                 CheckingForWinner();
             }
+            playerBoy.playerChips -= playerBoy.betChips;
+            playerBoy.betChips = 0;
+            photonView.RPC("PlayerBetStatsSetterRPC", RpcTarget.All, playerBoy.playerChips, 0);
         }
     }
 
