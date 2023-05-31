@@ -303,10 +303,6 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
             {
                 Dealer.instance.PreFlop();
             }
-            if (OnlineMultiplayerManager.instance.roundNumber == 2)
-            {
-                Dealer.instance.PreFlop();
-            }
             else if (OnlineMultiplayerManager.instance.roundNumber == 3)
             {
                 Dealer.instance.Flop();
