@@ -188,7 +188,7 @@ public class PlayerBoy : MonoBehaviour
     public void UpdateUITexts()
     {
         playerChipsText.text = "" + playerChips.ToString();
-        betChipsText.text = "" + playerCurrentTotalBet.ToString();
+        betChipsText.text = "" + betChips.ToString();
         //photonView.RPC("UpdateUITextsRPC", RpcTarget.All);
     }
 
