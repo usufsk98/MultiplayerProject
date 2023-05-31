@@ -312,9 +312,6 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
                 CheckingForWinner();
             }
             photonView.RPC("AddingCoinsToPotRPC", RpcTarget.Others); 
-            playerBoy.playerChips -= playerBoy.betChips;
-            playerBoy.betChips = 0;
-            photonView.RPC("PlayerBetStatsSetterRPC", RpcTarget.All, playerBoy.playerChips, 0);
         }
     }
 
@@ -360,8 +357,6 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
                 CheckingForWinner();
             }
             playerBoy.playerChips -= playerBoy.betChips;
-            playerBoy.betChips = 0;
-            photonView.RPC("PlayerBetStatsSetterRPC", RpcTarget.All, playerBoy.playerChips, 0);
         }
     }
 
