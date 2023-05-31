@@ -2715,6 +2715,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370f2c5b2042a2b44b0b2225cf2419d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  generatedCardsNumbers: 
+  communityCardsIntegers: 
   deck:
     cards:
     - suit: 0
@@ -2838,6 +2840,7 @@ MonoBehaviour:
   pokerRoundManager:
     currentRound: 0
     roundText: {fileID: 565255177}
+  PhotonView: {fileID: 410678737}
   currentBet: 0
 --- !u!114 &410678737
 MonoBehaviour:

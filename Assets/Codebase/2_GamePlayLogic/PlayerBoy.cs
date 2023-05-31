@@ -56,6 +56,7 @@ public class PlayerBoy : MonoBehaviour
 
     public bool myTurn;
     public PhotonView photonView;
+    public int orderInPhoton = 0;
 
     private void Start()
     {
@@ -68,10 +69,43 @@ public class PlayerBoy : MonoBehaviour
         Debug.Log(gameObject.name + PlayerChips);
         photonView = GetComponent<PhotonView>();
 
-        
+        if(photonView.IsMine)
+            SetOrderInPhoton();
         //PlayerRankSetter();
     }
 
+    public void SetOrderInPhoton()
+    {
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+            if (PhotonNetwork.PlayerList[i].UserId.Equals(PhotonNetwork.LocalPlayer.UserId))
+            {
+                orderInPhoton = i;
+                break;
+            }
+        }
+        List<int> userIdAndPhotonView = new List<int>();
+        userIdAndPhotonView.Add(orderInPhoton);
+        userIdAndPhotonView.Add(photonView.ViewID);
+        photonView.RPC("SetOrderInPhotonRPC", RpcTarget.Others,userIdAndPhotonView.ToArray());
+    }
+    [PunRPC]
+    public void SetOrderInPhotonRPC(int[] userIDPhotonView)
+    {
+        if (photonView != null)
+        {
+            if (!photonView.IsMine)
+            {
+                    if (userIDPhotonView[1].Equals(this.photonView.ViewID))
+                    {
+                        Debug.LogError("ID MATCH: " + userIDPhotonView[1]);
+                        Debug.LogError("ID MATCH: " + userIDPhotonView[0]);
+                        orderInPhoton = userIDPhotonView[0];
+                    }
+            }
+        }
+        
+    }
     public void PlayerRankSetter()
     {
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -174,14 +208,16 @@ public class PlayerBoy : MonoBehaviour
     }
     public void AddCard(Card card/*, Transform dealerPosition*/)
     {
-        Debug.LogError("ADD CARD__________");
+       
+       // GameObject cardObj = PhotonNetwork.Instantiate(cardPrefab.name, transform.position, transform.rotation);
+        Debug.LogError("ADD CARD__________"+card.rank+card.suit);
         GeneratedCard generatedCard = cardPrefab.GetComponent<GeneratedCard>();
         generatedCard.SetValue(card);
         generatedCard.RavealCard(false);
 
         playerCards.Add(card);
         GameObject cardObj = Instantiate(cardPrefab, this.transform);
-        //GameObject cardObj = PhotonNetwork.Instantiate(cardPrefab.name, this.transform.position,this.transform.rotation);
+       
         cardObj.transform.DOMove(playerCardsPosition[playerCards.Count - 1].position, 1f);
         cardObj.transform.DORotateQuaternion(playerCardsPosition[playerCards.Count - 1].rotation, 1f);
 
@@ -194,28 +230,35 @@ public class PlayerBoy : MonoBehaviour
         Card card;
         if (photonView != null)
         {
-            if (!photonView.IsMine)
+            Debug.LogError("ADD CARD RPC ");
+            //if (!photonView.IsMine)
             {
-                for (int i = 1; i < numbers.Length; i++)
-                {
+                //if (PhotonNetwork.PlayerList[numbers[0]].UserId.Equals(PhotonNetwork.LocalPlayer.UserId))
+                //    return;
+                    for (int i = 1; i < numbers.Length; i++)
+                    {
+                    //GameObject cardObj = PhotonNetwork.Instantiate(cardPrefab.name, transform.position,transform.rotation);
                     card = Dealer.instance.deck.cards[numbers[i]];
-                    Debug.LogError("ADD CARD RPC__________");
-                    GeneratedCard generatedCard = cardPrefab.GetComponent<GeneratedCard>();
-                    generatedCard.SetValue(card);
-                    generatedCard.RavealCard(false);
-
+                    Debug.LogError("Player Number "+numbers[0]);
+                    Debug.LogError("ADD CARD NO: "+numbers[i]);
+                    Debug.LogError("CARD NO IN DECK: "+ Dealer.instance.deck.cards[numbers[i]]);
+                    //GeneratedCard generatedCard = cardPrefab.GetComponent<GeneratedCard>();
+                    //generatedCard.SetValue(card);
+                    //generatedCard.RavealCard(false);
+                    Debug.LogError("ADD CARD--------------");
                     playerCards.Add(card);
-                    GameObject cardObj = Instantiate(cardPrefab, this.transform);
-                    cardObj.transform.DOMove(playerCardsPosition[playerCards.Count - 1].position, 1f);
-                    cardObj.transform.DORotateQuaternion(playerCardsPosition[playerCards.Count - 1].rotation, 1f);
+                    //GameObject cardObj = Instantiate(cardPrefab, this.transform);
+                    //cardObj.transform.DOMove(playerCardsPosition[playerCards.Count - 1].position, 1f);
+                    //cardObj.transform.DORotateQuaternion(playerCardsPosition[playerCards.Count - 1].rotation, 1f);
 
-                    generatedCards.Add(cardObj.GetComponent<GeneratedCard>());
-                }
-                
+                    //generatedCards.Add(cardObj.GetComponent<GeneratedCard>());
+                    }
+                  //photonView.RPC("AddCardToOthersRPC", RpcTarget.Others, numbers);
             }
         }
        
     }
+
     [PunRPC]
     public void InitialTurnRPC(int value)
     {

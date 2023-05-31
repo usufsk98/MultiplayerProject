@@ -128,7 +128,8 @@ public class Dealer : Singleton_IndependentObject<Dealer>
 
 
     }
-    List<int> playerCardsIntegers = new List<int>();
+    public List<int> playerCardsIntegersTemp = new List<int>();
+    public List<int> playerCardsIntegers = new List<int>();
     public void GeneratePlayersCard()
     {
         int numToRemove;
@@ -137,19 +138,17 @@ public class Dealer : Singleton_IndependentObject<Dealer>
            
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
-                playerCardsIntegers.Add(i);
+                playerCardsIntegersTemp.Add(i);
                 for (int j = 0; j < 2; j++)
                 {
                    numToRemove = (UnityEngine.Random.Range(0, generatedCardsNumbers.Count));
-                   playerCardsIntegers.Add(numToRemove);
+                    playerCardsIntegersTemp.Add(generatedCardsNumbers[numToRemove]);
                     generatedCardsNumbers.RemoveAt(numToRemove);
                    //deck.cards.RemoveAt(numToRemove);
 
                 }
-                Debug.LogError("Call RPC: "+ PhotonNetwork.PlayerList.Length);
-                Debug.LogError("Call RPC INDEX: " + i);
-                GetComponent<PhotonView>().RPC("GeneratePlayerCards", RpcTarget.All, playerCardsIntegers.ToArray());
-                playerCardsIntegers.Clear();
+                GetComponent<PhotonView>().RPC("GeneratePlayerCards", RpcTarget.All, playerCardsIntegersTemp.ToArray());
+                playerCardsIntegersTemp.Clear();
             }
            
         }
@@ -161,23 +160,49 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         Debug.LogError("GeneratePlayer CARDS." +numbers[1]);
         Debug.LogError("GeneratePlayer CARDS." +numbers[2]);
         //numbers[0] is player number in photon list
-        if (PhotonNetwork.PlayerList[numbers[0]].UserId.Equals(PhotonNetwork.LocalPlayer.UserId))
-        {
-            for (int i = 1; i < numbers.Length; i++)
-            {
-                Debug.LogError("Dech.cards: " + deck.Count());
-                Debug.LogError("Dech.cards num: " + numbers[i]);
-                Debug.LogError("Deck number " + deck.cards[numbers[i]]);
-                Debug.LogError("PLAYER BOY CURRENT " + currentPlayerBoy);
-                currentPlayerBoy.AddCard(deck.cards[numbers[i]]);
-               
+        //if (PhotonNetwork.PlayerList[numbers[0]].UserId.Equals(PhotonNetwork.LocalPlayer.UserId) && PhotonView.IsMine)
+        //{
+        //    Debug.LogError("+++++++SETTING MY CARDS++++++++++");
+        //    playerCardsIntegers = new List<int>();
+        //    for (int i = 1; i < numbers.Length; i++)
+        //    {
 
-                deck.cards.RemoveAt(numbers[i]);
+        //        //if(PhotonView.IsMine)
+        //        Debug.LogError("Player INDEX: " + numbers[0]);
+        //        Debug.LogError("number[i]" + numbers[i]);
+        //        currentPlayerBoy.AddCard(deck.cards[numbers[i]]);
+
+        //        //deck.cards.RemoveAt(numbers[i]);
+        //    }
+        //}
+        //else
+        {
+            //Debug.LogError("Player ID: " + numbers[0]);
+            //Debug.LogError("number[i]" + numbers[1]);
+            //Debug.LogError("number[i]" + numbers[2]);
+            //if (PhotonView.IsMine)
+            {
+                for (int i = 1; i < numbers.Length; i++)
+                {
+                    //deck.cards.RemoveAt(numbers[i]);
+                    for (int j = 0; j < players.Count; j++)
+                    {
+                        if (players[j].orderInPhoton.Equals(numbers[0]))
+                        {
+                            Debug.Log("Player ID number" + players[j].orderInPhoton);
+                            Debug.Log("Player ID in coming" + (numbers[0]));
+                            players[numbers[0]].AddCard(deck.cards[numbers[i]]);
+                        }
+                    }
+
+                }
             }
-            currentPlayerBoy.photonView.RPC("AddCardRPC", RpcTarget.All, playerCardsIntegers.ToArray());
         }
-       
+               
+            //if(!PhotonView.IsMine)
+            //currentPlayerBoy.photonView.RPC("AddCardRPC", RpcTarget.Others, numbers);
     }
+
     [PunRPC]
     public void PlayGameStarter()
     {
@@ -199,6 +224,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         //players[currentPlayer].InitialTurn(400, 2);
         yield return new WaitForSeconds(2f);
         StartCoroutine(GiveCardsInAManner());
+        yield return new WaitForSeconds(3f);
         GeneratePlayersCard();
         //CurrentBet = 400;
         //GameInputManager.instance.SetValue(currentBet);
@@ -220,7 +246,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
             for (int i = 0; i < 5; i++)
             {
                 numToRemove = (UnityEngine.Random.Range(0, generatedCardsNumbers.Count));
-                communityCardsIntegers.Add(numToRemove);
+                communityCardsIntegers.Add(generatedCardsNumbers[numToRemove]);
                 generatedCardsNumbers.RemoveAt(numToRemove);
             }
             GetComponent<PhotonView>().RPC("GettingFiveNumbersRPC", RpcTarget.Others, communityCardsIntegers.ToArray());
@@ -239,7 +265,7 @@ public class Dealer : Singleton_IndependentObject<Dealer>
         {
             Debug.Log(communityCardsIntegers[i]);
             AddCommunityCard(deck.cards[communityCardsIntegers[i]]);
-            deck.cards.RemoveAt(communityCardsIntegers[i]);
+            //deck.cards.RemoveAt(communityCardsIntegers[i]);
         }
     }
 
