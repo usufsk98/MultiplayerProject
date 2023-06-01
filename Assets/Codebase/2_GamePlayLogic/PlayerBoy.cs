@@ -60,6 +60,7 @@ public class PlayerBoy : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefsManager.Load();
         winnerPanel.SetActive(false);
         dealerTag.SetActive(false);
         betChips = 0;
@@ -68,7 +69,7 @@ public class PlayerBoy : MonoBehaviour
         PlayerChips = PlayerPrefs.GetInt(this.gameObject.name, 8000);
         Debug.Log(gameObject.name + PlayerChips);
         photonView = GetComponent<PhotonView>();
-
+       
         if(photonView.IsMine)
             SetOrderInPhoton();
         //PlayerRankSetter();
@@ -189,6 +190,7 @@ public class PlayerBoy : MonoBehaviour
     {
         playerChipsText.text = "" + playerChips.ToString();
         betChipsText.text = "" + betChips.ToString();
+        Debug.LogError("BET CHIPSSS: "+betChips.ToString());
         //photonView.RPC("UpdateUITextsRPC", RpcTarget.All);
     }
 
@@ -296,9 +298,10 @@ public class PlayerBoy : MonoBehaviour
             
             animationTimes--;
         }
-        yield return new WaitForSeconds(delayFactor * 1f);
+        //yield return new WaitForSeconds(delayFactor * 1f);
+        yield return new WaitForSeconds(0);
         UpdateUITexts();
-        photonView.RPC("UpdateUITextsRPC", RpcTarget.All, betChips.ToString());
+        photonView.RPC("UpdateUITextsRPC", RpcTarget.Others, betChips.ToString());
         Dealer.instance.currentBet = 0;
         GameInputManager.instance.SetValue(0);
         //Dealer.instance.NextPlayerTurn();
@@ -387,9 +390,9 @@ public class PlayerBoy : MonoBehaviour
 
     public void PlayerTurn()
     {
+        UpdateUITexts();
         GameInputManager.instance.DealDone();
         Debug.Log(Dealer.instance.currentBet);
-        UpdateUITexts();
     }
 
 }

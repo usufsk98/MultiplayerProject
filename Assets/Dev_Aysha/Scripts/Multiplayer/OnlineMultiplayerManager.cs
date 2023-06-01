@@ -145,16 +145,21 @@ public class OnlineMultiplayerManager : MonoBehaviour
     public void EndTurn()
     {
         Debug.Log("end turn");
-        _localPlayerDataManager.photonView.RPC("EndTurnRPC", RpcTarget.All);
 
+        _localPlayerDataManager.photonView.RPC("EndTurnRPC", RpcTarget.All);
         TurnChanges();
 
         _localPlayerDataManager.BettingValuesSetter(ref playerBoy.lastBetLocalPlayer, ref playerBoy.playerCurrentTotalBet);
 
-        _localPlayerDataManager.AddCoinsToPotPlayerDataManager();
-
+        //_localPlayerDataManager.AddCoinsToPotPlayerDataManager();
+        StartCoroutine(AddCoinsToPot());
     }
-
+    public IEnumerator AddCoinsToPot()
+    {
+        yield return new WaitForSeconds(2f);
+        Debug.LogError("POT ADDED");
+;        _localPlayerDataManager.AddCoinsToPotPlayerDataManager();
+    }
     public void TurnChanges()
     {
         _localPlayerDataManager.photonView.RPC("CallFunction", RpcTarget.All);

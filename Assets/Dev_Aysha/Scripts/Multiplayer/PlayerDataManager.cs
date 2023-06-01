@@ -288,7 +288,7 @@ public class PlayerDataManager : MonoBehaviourPunCallbacks
         {
             foreach (PlayerBoy player in Dealer.instance.players)
             {
-                Debug.Log("Bets are matched, add coins to pot");
+                Debug.Log("Bets are matched, add coins to pot:"+ player.dealerBool);
                 Dealer.instance.dealerChips += player.playerCurrentTotalBet;
                 player.betChips = 0;
                 player.playerCurrentTotalBet = 0;
